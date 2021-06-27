@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>hexo博客中插入图片</title>
+    <link href="/2021/06/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/"/>
+    <url>/2021/06/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/</url>
+    
+    <content type="html"><![CDATA[<h1><span id="第一步安装插件">第一步：安装插件</span></h1><p>在hexo根目录打开Git Bash,执行</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs undefined">npm install hexo-asset-image --save<br></code></pre></td></tr></table></figure><h1><span id="第二步打开hexo的配置文件_configyml">第二步：打开hexo的配置文件_config.yml</span></h1><p>找到 post_asset_folder，把这个选项从false改成true</p><h1><span id="第三步修改模块代码">第三步：修改模块代码</span></h1><p>打开如下js文件</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs undefined">/node_modules/hexo-asset-image/index.js<br></code></pre></td></tr></table></figure><p>将内容更换为下面的代码<br> （在此感谢Ericam_ 大神：<a href="https://links.jianshu.com/go?to=https://blog.csdn.net/xjm850552586">https://blog.csdn.net/xjm850552586</a>）</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-string">&#x27;use strict&#x27;</span>;<br>var cheerio = require(<span class="hljs-string">&#x27;cheerio&#x27;</span>);<br><br>// http://stackoverflow.com/questions/14480345/how-to-get-the-nth-occurrence-in-a-string<br><span class="hljs-keyword">function</span> getPosition(str, m, i) &#123;<br>  <span class="hljs-built_in">return</span> str.split(m, i).join(m).length;<br>&#125;<br><br>var version = String(hexo.version).split(<span class="hljs-string">&#x27;.&#x27;</span>);<br>hexo.extend.filter.register(<span class="hljs-string">&#x27;after_post_render&#x27;</span>, <span class="hljs-keyword">function</span>(data)&#123;<br>  var config = hexo.config;<br>  <span class="hljs-keyword">if</span>(config.post_asset_folder)&#123;<br>        var link = data.permalink;<br>    <span class="hljs-keyword">if</span>(version.length &gt; 0 &amp;&amp; Number(version[0]) == 3)<br>       var beginPos = getPosition(link, <span class="hljs-string">&#x27;/&#x27;</span>, 1) + 1;<br>    <span class="hljs-keyword">else</span><br>       var beginPos = getPosition(link, <span class="hljs-string">&#x27;/&#x27;</span>, 3) + 1;<br>    // In hexo 3.1.1, the permalink of <span class="hljs-string">&quot;about&quot;</span> page is like <span class="hljs-string">&quot;.../about/index.html&quot;</span>.<br>    var endPos = link.lastIndexOf(<span class="hljs-string">&#x27;/&#x27;</span>) + 1;<br>    link = link.substring(beginPos, endPos);<br><br>    var toprocess = [<span class="hljs-string">&#x27;excerpt&#x27;</span>, <span class="hljs-string">&#x27;more&#x27;</span>, <span class="hljs-string">&#x27;content&#x27;</span>];<br>    <span class="hljs-keyword">for</span>(var i = 0; i &lt; toprocess.length; i++)&#123;<br>      var key = toprocess[i];<br> <br>      var $ = cheerio.load(data[key], &#123;<br>        ignoreWhitespace: <span class="hljs-literal">false</span>,<br>        xmlMode: <span class="hljs-literal">false</span>,<br>        lowerCaseTags: <span class="hljs-literal">false</span>,<br>        decodeEntities: <span class="hljs-literal">false</span><br>      &#125;);<br><br>      $(<span class="hljs-string">&#x27;img&#x27;</span>).each(<span class="hljs-function"><span class="hljs-title">function</span></span>()&#123;<br>        <span class="hljs-keyword">if</span> ($(this).attr(<span class="hljs-string">&#x27;src&#x27;</span>))&#123;<br>            // For windows style path, we replace <span class="hljs-string">&#x27;\&#x27;</span> to <span class="hljs-string">&#x27;/&#x27;</span>.<br>            var src = $(this).attr(<span class="hljs-string">&#x27;src&#x27;</span>).replace(<span class="hljs-string">&#x27;\\&#x27;</span>, <span class="hljs-string">&#x27;/&#x27;</span>);<br>            <span class="hljs-keyword">if</span>(!/http[s]*.*|\/\/.*/.<span class="hljs-built_in">test</span>(src) &amp;&amp;<br>               !/^\s*\//.<span class="hljs-built_in">test</span>(src)) &#123;<br>              // For <span class="hljs-string">&quot;about&quot;</span> page, the first part of <span class="hljs-string">&quot;src&quot;</span> can<span class="hljs-string">&#x27;t be removed.</span><br><span class="hljs-string">              // In addition, to support multi-level local directory.</span><br><span class="hljs-string">              var linkArray = link.split(&#x27;</span>/<span class="hljs-string">&#x27;).filter(function(elem)&#123;</span><br><span class="hljs-string">                return elem != &#x27;</span><span class="hljs-string">&#x27;;</span><br><span class="hljs-string">              &#125;);</span><br><span class="hljs-string">              var srcArray = src.split(&#x27;</span>/<span class="hljs-string">&#x27;).filter(function(elem)&#123;</span><br><span class="hljs-string">                return elem != &#x27;</span><span class="hljs-string">&#x27; &amp;&amp; elem != &#x27;</span>.<span class="hljs-string">&#x27;;</span><br><span class="hljs-string">              &#125;);</span><br><span class="hljs-string">              if(srcArray.length &gt; 1)</span><br><span class="hljs-string">                srcArray.shift();</span><br><span class="hljs-string">              src = srcArray.join(&#x27;</span>/<span class="hljs-string">&#x27;);</span><br><span class="hljs-string">              $(this).attr(&#x27;</span>src<span class="hljs-string">&#x27;, config.root + link + src);</span><br><span class="hljs-string">              console.info&amp;&amp;console.info(&quot;update link as:--&gt;&quot;+config.root + link + src);</span><br><span class="hljs-string">            &#125;</span><br><span class="hljs-string">        &#125;else&#123;</span><br><span class="hljs-string">            console.info&amp;&amp;console.info(&quot;no src attr, skipped...&quot;);</span><br><span class="hljs-string">            console.info&amp;&amp;console.info($(this));</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">      &#125;);</span><br><span class="hljs-string">      data[key] = $.html();</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">  &#125;</span><br><span class="hljs-string">&#125;);</span><br></code></pre></td></tr></table></figure><h1><span id="第四步插入图片">第四步：插入图片</span></h1><p>比如我写好一个 md ，然后我采用 ctrl + f 查找 md文件 的文件名 替换为 .</p><p><img src="/2021/06/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/image-20210626211018298.png" alt="image-20210626211018298"></p><p><img src="/2021/06/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/liu.jpg" alt="liu"></p><p>然后在静态资源中就能正常显示图片了</p><h1><span id="另外">另外</span></h1><p>很多主题都有自己的方法插入图片的方法，比如我现在使用的fluid主题</p><p>参考链接：<a href="https://www.jianshu.com/p/f72aaad7b852">https://www.jianshu.com/p/f72aaad7b852</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>博客使用技巧</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>博客插入图片</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>测试图片</title>
+    <link href="/2021/06/24/test/"/>
+    <url>/2021/06/24/test/</url>
+    
+    <content type="html"><![CDATA[<p><img src="/img/basketball.jpg" alt="liu"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>类型测试</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>标签测试</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>

@@ -1,0 +1,623 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+  <title>dom 的常见操作 - DevinQing</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Devin Qing's space</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/gita.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="dom 的常见操作">
+              
+                dom 的常见操作
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-02 22:07" pubdate>
+        2021年7月2日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      46
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">dom 的常见操作</h1>
+            
+            <div class="markdown-body">
+              <h3><span id="节点查找api">节点查找API</span></h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;box&quot;</span>&gt;</span>box1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;box&quot;</span>&gt;</span>box2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>4<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>5<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>6<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>7<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;ipt&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;123&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><h4><span id="getelementsbytagname">getElementsByTagName</span></h4><ul>
+<li><p>根据ID查找元素，返回一个节点对象</p>
+</li>
+<li><p>大小写敏感，如果有多个结果，只返回第一个</p>
+</li>
+<li><p>其他元素不支持</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> app = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">&#x27;app&#x27;</span>) <br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><h4><span id="getelementsbyclassname">getElementsByClassName</span></h4><ul>
+<li><p>根据类型查找元素，多个类名用空格分隔 返回一个 HTMLCollection</p>
+</li>
+<li><p>兼容性为 IE9+(含)</p>
+</li>
+<li><p>不仅仅是 document，其他元素也支持这个方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> body = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">&#x27;body&#x27;</span>)<br><span class="hljs-keyword">var</span> boxs = <span class="hljs-built_in">document</span>.getElementsByClassName(<span class="hljs-string">&#x27;box&#x27;</span>)<br><span class="hljs-keyword">var</span> boxes = body[<span class="hljs-number">0</span>].getElementsByClassName(<span class="hljs-string">&#x27;box&#x27;</span>)<br><span class="hljs-built_in">console</span>.log(boxs) <span class="hljs-comment">// 返回一个 HTMLCollection 的 伪数组</span><br><span class="hljs-built_in">console</span>.log(boxes) <span class="hljs-comment">// 结果一样</span><br><span class="hljs-built_in">console</span>.log(boxes === boxs) <span class="hljs-comment">// false 虽然结果一样 但是其实是指向不一样的两个伪数组</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><h4><span id="getelementsbytagname">getElementsByTagName</span></h4><ul>
+<li><p>根据标签查找元素， * 表示查询所有标签， 返回一个 HTMLCollection伪数组</p>
+</li>
+<li><p>同样适合于其他元素</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> lis = <span class="hljs-built_in">document</span>.getElementsByTagName(<span class="hljs-string">&#x27;li&#x27;</span>)<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><h4><span id="getelementsbyname">getElementsByName</span></h4><ul>
+<li><p>根据元素的name 属性查找，返回一个 NodeList</p>
+</li>
+<li><p>其他元素不支持</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> ipt = <span class="hljs-built_in">document</span>.getElementsByName(<span class="hljs-string">&#x27;ipt&#x27;</span>)<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><h4><span id="queryselector">querySelector</span></h4><ul>
+<li><p>回单个 Node 匹配到多个也只返回第一个</p>
+</li>
+<li><p>同样支持其他元素 </p>
+</li>
+<li><p>IE8及以上</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> li = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;li&#x27;</span>)<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><h4><span id="queryselectorall">querySelectorAll</span></h4><ul>
+<li><p>返回一个 NodeList IE8及其以上</p>
+</li>
+<li><p>同样支持其他元素</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> lisN = <span class="hljs-built_in">document</span>.querySelectorAll(<span class="hljs-string">&#x27;li&#x27;</span>)<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><h4><span id="documentforms">document.forms</span></h4><ul>
+<li><p>获取当前页面所有 form, 返回一个 HTMLCollection</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> form = <span class="hljs-built_in">document</span>.forms<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3><span id="节点创建api">节点创建API</span></h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;box&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;alert(123)&quot;</span>&gt;</span>box1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">      <span class="hljs-keyword">var</span> box = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.box&#x27;</span>)</span><br><span class="javascript">      <span class="hljs-comment">// 1.createElement 创建元素</span></span><br><span class="javascript">      <span class="hljs-keyword">var</span> ele = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;div&#x27;</span>)</span><br><span class="javascript">      ele.id = <span class="hljs-string">&#x27;Devin&#x27;</span></span><br><span class="javascript">      ele.style = <span class="hljs-string">&#x27;width: 100px;height: 100px; background-color: red;&#x27;</span></span><br><span class="javascript">      ele.innerHTML = <span class="hljs-string">&#x27;我是创建的节点&#x27;</span></span><br><span class="javascript">      ele.class = <span class="hljs-string">&#x27;add&#x27;</span></span><br><span class="javascript">      box.appendChild(ele) <span class="hljs-comment">// 需要用 append 添加到相应 dom 元素中</span></span><br><span class="javascript">      <span class="hljs-built_in">console</span>.dir(ele)</span><br><span class="javascript">      <span class="hljs-comment">// 不能在 css 文件中设置样式</span></span><br><span class="javascript"></span><br><span class="javascript">      <span class="hljs-comment">// 2.createTextNode  创建文本节点</span></span><br><span class="javascript">      <span class="hljs-keyword">var</span> node = <span class="hljs-built_in">document</span>.createTextNode(<span class="hljs-string">&#x27;我是文本节点&#x27;</span>)</span><br><span class="javascript">      box.appendChild(node)</span><br><span class="javascript"></span><br><span class="javascript">      <span class="hljs-comment">// 3. cloneNode 克隆一个节点</span></span><br><span class="javascript">      <span class="hljs-comment">//   node.cloneNode(true/false) 接收一个bool参数，用来表示是否复制子元素</span></span><br><span class="javascript">      <span class="hljs-keyword">var</span> clone = box.cloneNode(<span class="hljs-literal">true</span>)</span><br><span class="javascript">      <span class="hljs-built_in">console</span>.log(clone)</span><br><span class="javascript">      box.appendChild(clone)</span><br><span class="javascript">      <span class="hljs-comment">// 克隆不会克隆事件 除非是在 标签内绑定</span></span><br><span class="javascript"></span><br><span class="javascript">      <span class="hljs-comment">// createDocumentFragment</span></span><br><span class="javascript">      <span class="hljs-comment">//  创建一个文档碎片 表示一种轻量级的文档，主要是用来存储临时节点</span></span><br><span class="javascript">      <span class="hljs-comment">// 大量操作时可以大大提高性能</span></span><br><span class="javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><h4><span id="createelement">createElement</span></h4><ul>
+<li><p>创建元素</p>
+</li>
+<li><p>创建的元素不能再 css 中设置样式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> box = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.box&#x27;</span>)<br>     <span class="hljs-comment">// 1.createElement 创建元素</span><br>     <span class="hljs-keyword">var</span> ele = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;div&#x27;</span>)<br>     ele.id = <span class="hljs-string">&#x27;Devin&#x27;</span><br>     ele.style = <span class="hljs-string">&#x27;width: 100px;height: 100px; background-color: red;&#x27;</span><br>     ele.innerHTML = <span class="hljs-string">&#x27;我是创建的节点&#x27;</span><br>     ele.class = <span class="hljs-string">&#x27;add&#x27;</span><br>     box.appendChild(ele) <span class="hljs-comment">// 需要用 append 添加到相应 dom 元素中</span><br>     <span class="hljs-built_in">console</span>.dir(ele)<br>     <span class="hljs-comment">// 不能在 css 文件中设置样式</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><h4><span id="createtextnode">createTextNode</span></h4><ul>
+<li><p>创建文本节点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> node = <span class="hljs-built_in">document</span>.createTextNode(<span class="hljs-string">&#x27;我是文本节点&#x27;</span>)<br>box.appendChild(node)<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><h4><span id="clonenode">cloneNode</span></h4><ul>
+<li><p>node.cloneNode(true/false) 接收一个bool参数，用来表示是否复制子元素</p>
+</li>
+<li><p>克隆不会克隆事件，除非是在标签内绑定的事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> clone = box.cloneNode(<span class="hljs-literal">true</span>)<br><span class="hljs-built_in">console</span>.log(clone)<br>box.appendChild(clone)<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><h4><span id="createdocumentfragment">createDocumentFragment</span></h4><ul>
+<li><p>创建一个文档碎片 表示一种轻量级的文档，主要是用来存储临时节点</p>
+</li>
+<li><p>大量操作时可以大大提高性能</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3><span id="节点修改api">节点修改API</span></h3><ul>
+<li><h4><span id="appendchild">appendChild</span></h4><p>用于插入其他元素</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;parent&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;son&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">      <span class="hljs-keyword">var</span> par = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.parent&#x27;</span>)</span><br><span class="javascript">      <span class="hljs-keyword">var</span> p = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;p&#x27;</span>)</span><br><span class="javascript">      p.innerHTML = <span class="hljs-string">&#x27;被创造出来的 p&#x27;</span></span><br><span class="javascript">      par.appendChild(p)</span><br><span class="javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><h4><span id="insertbefore">insertBefore</span></h4><ul>
+<li>insertBefore填入两个参数（必须），第一个参数是需要插入的节点，第二个参数是排在哪个子节点之前</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;parent&quot;</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;son&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">     <span class="hljs-keyword">var</span> par = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.parent&#x27;</span>)</span><br><span class="javascript">     <span class="hljs-keyword">var</span> p1 = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;p&#x27;</span>)</span><br><span class="javascript">     p1.innerHTML = <span class="hljs-string">&#x27;被创造出来的 p1&#x27;</span></span><br><span class="javascript">     <span class="hljs-keyword">var</span> p2 = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;p&#x27;</span>)</span><br><span class="javascript">     p2.innerHTML = <span class="hljs-string">&#x27;insertBefore 节点&#x27;</span></span><br><span class="javascript">     par.appendChild(p1)</span><br><span class="javascript">     par.insertBefore(p2, <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.son&#x27;</span>))</span><br><span class="javascript">   </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br> <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><h4><span id="insertadjacenthtml">insertAdjacentHTML</span></h4><ul>
+<li>用于在相邻或者内部插入 htmlString</li>
+<li>用法如下</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;parent&quot;</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;son&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">     <span class="hljs-keyword">var</span> son = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.son&#x27;</span>)</span><br><span class="javascript">     son.insertAdjacentHTML(</span><br><span class="javascript">       <span class="hljs-string">&#x27;beforebegin&#x27;</span>,</span><br><span class="javascript">       <span class="hljs-string">&#x27;&lt;p&gt;用insertAdjacentHTML 插入的标签p &lt;/p&gt;&#x27;</span></span><br><span class="javascript">     )</span><br><span class="javascript">   </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br> <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>第一个参数表示插入位置，只能是以下四个字符串</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- beforebegin --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><br>  <span class="hljs-comment">&lt;!-- afterbegin --&gt;</span><br>  foo<br>  <span class="hljs-comment">&lt;!-- beforeend --&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-comment">&lt;!-- afterend --&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这四个字符串表示插入的不同位置</p>
+</li>
+<li><p>第二个参数是需要插入的 htmlString</p>
+</li>
+<li><p>此方法需要解析html代码转义使用，如果插入的是文本，不建议使用该方法</p>
+</li>
+<li><p>兼容性：js谷歌浏览器，火狐浏览器，IE8+</p>
+</li>
+</ul>
+</li>
+<li><h4><span id="insertadjacentelement">insertAdjacentElement</span></h4><p>用法和上面类似，只是第二个参数 为一个 element</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;parent&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;son&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">      <span class="hljs-keyword">var</span> son = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.son&#x27;</span>)</span><br><span class="javascript">      <span class="hljs-keyword">var</span> p = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;p&#x27;</span>)</span><br><span class="javascript">      p.innerHTML = <span class="hljs-string">&#x27;用insertAdjacentHTML 插入的标签p&#x27;</span></span><br><span class="javascript">      son.insertAdjacentElement(<span class="hljs-string">&#x27;beforebegin&#x27;</span>, p)</span><br><span class="javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><h4><span id="removechild">removeChild</span></h4><p>用于删除指定的子节点并返回子节点</p>
+<p><strong>注意：</strong>必须是子节点，不然会报错</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;parent&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;son&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">      <span class="hljs-keyword">var</span> par = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.parent&#x27;</span>)</span><br><span class="javascript">      <span class="hljs-keyword">var</span> remove = par.removeChild(par.children[<span class="hljs-number">0</span>])</span><br><span class="javascript">      <span class="hljs-built_in">console</span>.log(remove) <span class="hljs-comment">// son 节点</span></span><br></code></pre></td></tr></table></figure></li>
+<li><h4><span id="replacechild">replaceChild</span></h4><p>replaceChild 用于将一个节点替换另一个节点</p>
+</li>
+</ul>
+<h3><span id="节点关系api">节点关系API</span></h3><ul>
+<li><h4><span id="父关系api">父关系API</span></h4><ul>
+<li><h5><span id="parentnode">parentNode</span></h5><p>每个节点都有一个parentNode属性，它表示元素的父节点。Element的父节点可能是Element，Document或DocumentFragment</p>
+</li>
+<li><h5><span id="parentelement">parentElement</span></h5><p>返回元素的父元素节点，与parentNode的区别在于，其父节点必须是一个Element元素，如果不是，则返回null</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;parent&quot;</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;son&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>p 节点<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">     <span class="hljs-keyword">var</span> p = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;p&#x27;</span>)</span><br><span class="javascript">     <span class="hljs-keyword">var</span> par = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.parent&#x27;</span>)</span><br><span class="javascript">     <span class="hljs-keyword">var</span> son = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.son&#x27;</span>)</span><br><span class="javascript">     <span class="hljs-built_in">console</span>.dir(son.parentElement.parentElement) <span class="hljs-comment">// par 节点</span></span><br><span class="javascript">     <span class="hljs-built_in">console</span>.log(son.parentNode) <span class="hljs-comment">// 也是 par 节点</span></span><br><span class="javascript">   </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br> <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><h4><span id="子关系api">子关系API</span></h4><ul>
+<li><h5><span id="children">children</span></h5><p>返回一个实时的 HTMLCollection 子节点都是Element IE9+</p>
+</li>
+<li><h5><span id="childnodes">childNodes</span></h5><p>返回一个实时的 NodeList 表示元素的子节点列表  子节点中包含文本节点</p>
+</li>
+<li><h5><span id="firstchild">firstChild</span></h5><p>返回第一个子节点，包含文本节点，不存在返回 null</p>
+</li>
+<li><h5><span id="firstelementchild">firstElementChild</span></h5><p>返回第一个 element 元素</p>
+</li>
+<li><h5><span id="lastchild">lastChild</span></h5><p>返回最后一个子节点，包含文本节点，不存在返回 null</p>
+</li>
+<li><h5><span id="lastelementchild">lastElementChild</span></h5><p>返回最后一个 element 元素</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;parent&quot;</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;son&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">     <span class="hljs-keyword">var</span> par = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.parent&#x27;</span>)</span><br><span class="javascript">     <span class="hljs-keyword">var</span> son = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.son&#x27;</span>)</span><br><span class="javascript">     <span class="hljs-built_in">console</span>.log(par.children) <span class="hljs-comment">// HTMLCollection</span></span><br><span class="javascript">     <span class="hljs-built_in">console</span>.log(par.childNodes) <span class="hljs-comment">// NodeList 包含文本节点text 空格也算</span></span><br><span class="javascript">     <span class="hljs-built_in">console</span>.log(par.firstChild) <span class="hljs-comment">// text节点 父盒子中子节点上下都有空格</span></span><br><span class="javascript">     <span class="hljs-built_in">console</span>.log(par.lastChild) <span class="hljs-comment">// 同样 text 节点</span></span><br><span class="javascript">     <span class="hljs-built_in">console</span>.log(par.firstElementChild) <span class="hljs-comment">// .son</span></span><br><span class="javascript">     <span class="hljs-built_in">console</span>.log(par.lastElementChild) <span class="hljs-comment">// .son</span></span><br><span class="javascript">   </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br> <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><h4><span id="兄弟关系api">兄弟关系API</span></h4><ul>
+<li><h5><span id="previoussibling">previousSibling</span></h5><p>返回前一个节点，如果不存在则返回null。注意有可能拿到的节点是文本节点或注释节点，与预期的不符，要进行处理一下。</p>
+</li>
+<li><h5><span id="nextsibling">nextSibling</span></h5><p>返回后一个节点，如果不存在则返回null。注意有可能拿到的节点是文本节点，与预期的不符，要进行处理一下。 </p>
+</li>
+<li><h5><span id="previouselementsibling">previousElementSibling</span></h5><p>返回前一个元素节点，前一个节点必须是Element，注意IE9以下浏览器不支持。</p>
+</li>
+<li><h5><span id="nextelementsibling">nextElementSibling</span></h5><p>返回后一个元素节点，后一个节点必须是Element，注意IE9以下浏览器不支持。 </p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;parent&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>前面的兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;son&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>后面的兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">      <span class="hljs-keyword">var</span> par = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.parent&#x27;</span>)</span><br><span class="javascript">      <span class="hljs-keyword">var</span> son = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.son&#x27;</span>)</span><br><span class="javascript">      <span class="hljs-built_in">console</span>.log(son.previousSibling) <span class="hljs-comment">// text</span></span><br><span class="javascript">      <span class="hljs-built_in">console</span>.log(son.previousElementSibling) <span class="hljs-comment">// 前面的 p</span></span><br><span class="javascript">      <span class="hljs-built_in">console</span>.log(son.nextSibling) <span class="hljs-comment">// text</span></span><br><span class="javascript">      <span class="hljs-built_in">console</span>.log(son.nextElementSibling) <span class="hljs-comment">// 后面的 p</span></span><br><span class="javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3><span id="元素属性api">元素属性API</span></h3><ul>
+<li><h4><span id="setattribute">setAttribute</span></h4><p>给元素设置属性</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;parent&quot;</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>前面的兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;son&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>后面的兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">     <span class="hljs-keyword">var</span> par = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.parent&#x27;</span>)</span><br><span class="javascript">     <span class="hljs-keyword">var</span> son = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.son&#x27;</span>)</span><br><span class="javascript">     son.setAttribute(<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;booker&#x27;</span>)</span><br><span class="javascript">     son.setAttribute(<span class="hljs-string">&#x27;win&#x27;</span>, <span class="hljs-string">&#x27;suns&#x27;</span>)</span><br><span class="javascript">   </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br> <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><h4><span id="getattribute">getAttribute</span></h4><p>getAttribute返回指定的特性名相应的特性值，如果不存在，则返回null</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;parent&quot;</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>前面的兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;son&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>后面的兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">     <span class="hljs-keyword">var</span> par = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.parent&#x27;</span>)</span><br><span class="javascript">     <span class="hljs-keyword">var</span> son = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.son&#x27;</span>)</span><br><span class="javascript">     son.setAttribute(<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;booker&#x27;</span>)</span><br><span class="javascript">     son.setAttribute(<span class="hljs-string">&#x27;win&#x27;</span>, <span class="hljs-string">&#x27;suns&#x27;</span>)</span><br><span class="javascript">     <span class="hljs-keyword">var</span> getAt = son.getAttribute(<span class="hljs-string">&#x27;win&#x27;</span>)</span><br><span class="javascript">     <span class="hljs-built_in">console</span>.log(getAt) <span class="hljs-comment">// suns</span></span><br><span class="javascript">   </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br> <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><h4><span id="hasattribute">hasAttribute</span></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;parent&quot;</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>前面的兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;son&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>后面的兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">      <span class="hljs-keyword">var</span> par = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.parent&#x27;</span>)</span><br><span class="javascript">      <span class="hljs-keyword">var</span> son = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.son&#x27;</span>)</span><br><span class="javascript">      son.setAttribute(<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;booker&#x27;</span>)</span><br><span class="javascript">      son.setAttribute(<span class="hljs-string">&#x27;win&#x27;</span>, <span class="hljs-string">&#x27;suns&#x27;</span>)</span><br><span class="javascript">      <span class="hljs-keyword">var</span> getAt = son.getAttribute(<span class="hljs-string">&#x27;win&#x27;</span>)</span><br><span class="javascript">      <span class="hljs-built_in">console</span>.log(son.hasAttribute(<span class="hljs-string">&#x27;win&#x27;</span>)) <span class="hljs-comment">// true</span></span><br><span class="javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><h5><span id="dataset">dataset</span></h5><p><code>**HTMLElement.dataset**</code>属性允许无论是在读取模式和写入模式下访问在 HTML或 DOM中的元素上设置的所有<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en/HTML/Global_attributes#attr-data-*">自定义数据属性</a>(*data-**)集。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;parent&quot;</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>前面的兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;son&quot;</span> <span class="hljs-attr">data-point</span>=<span class="hljs-string">&quot;71&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>后面的兄弟<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">     <span class="hljs-keyword">var</span> par = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.parent&#x27;</span>)</span><br><span class="javascript">     <span class="hljs-keyword">var</span> son = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.son&#x27;</span>)</span><br><span class="javascript">     son.setAttribute(<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;booker&#x27;</span>)</span><br><span class="javascript">     son.setAttribute(<span class="hljs-string">&#x27;win&#x27;</span>, <span class="hljs-string">&#x27;suns&#x27;</span>)</span><br><span class="javascript">     <span class="hljs-keyword">var</span> getAt = son.getAttribute(<span class="hljs-string">&#x27;win&#x27;</span>)</span><br><span class="javascript">     <span class="hljs-built_in">console</span>.log(son.hasAttribute(<span class="hljs-string">&#x27;win&#x27;</span>)) <span class="hljs-comment">// true</span></span><br><span class="javascript">     <span class="hljs-built_in">console</span>.log(son.dataset) <span class="hljs-comment">// DOMStringMap &#123;point: &quot;71&quot;&#125;</span></span><br><span class="javascript">   </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br> <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3><span id="样式相关api">样式相关API</span></h3><ul>
+<li><h4><span id="直接修改元素的样式">直接修改元素的样式</span></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css"></span><br><span class="css">    <span class="hljs-selector-class">.box</span> &#123;</span><br><span class="css">      <span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;</span><br><span class="css">      <span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>;</span><br><span class="css">      <span class="hljs-attribute">background-color</span>: chocolate;</span><br><span class="css">    &#125;</span><br><span class="css">  </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;box&quot;</span>&gt;</span>box<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">    <span class="hljs-keyword">var</span> box = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.box&#x27;</span>)</span><br><span class="javascript">    box.style.color = <span class="hljs-string">&#x27;red&#x27;</span></span><br><span class="javascript">    box.style.setProperty(<span class="hljs-string">&#x27;font-size&#x27;</span>, <span class="hljs-string">&#x27;28px&#x27;</span>)</span><br><span class="javascript">    box.style.removeProperty(<span class="hljs-string">&#x27;color&#x27;</span>)</span><br><span class="javascript">  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><h4><span id="动态添加样式规则">动态添加样式规则</span></h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;box&quot;</span>&gt;</span>box<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">      <span class="hljs-keyword">var</span> box = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.box&#x27;</span>)</span><br><span class="javascript">      <span class="hljs-keyword">var</span> style = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;style&#x27;</span>)</span><br><span class="javascript">      style.innerHTML = <span class="hljs-string">&#x27;.box &#123;background-color: red; color: white&#125;&#x27;</span></span><br><span class="javascript">      <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;head&#x27;</span>).appendChild(style)</span><br><span class="javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><h4><span id="classlist获取样式-class">classList获取样式 class</span></h4><ul>
+<li><h5><span id="classlistadd">classList.add</span></h5><p>增加该样式</p>
+</li>
+<li><h5><span id="classlistremove">classList.remove</span></h5><p>去除该样式</p>
+</li>
+<li><h5><span id="classlisttonggle">classList.tonggle</span></h5><p>如果有该样式，则去除，如果没有，则增加</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="css"></span><br><span class="css">      <span class="hljs-selector-class">.box</span> &#123;</span><br><span class="css">        <span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;</span><br><span class="css">        <span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>;</span><br><span class="css">        <span class="hljs-attribute">background-color</span>: chocolate;</span><br><span class="css">      &#125;</span><br><span class="css">      <span class="hljs-selector-class">.font</span> &#123;</span><br><span class="css">        <span class="hljs-attribute">font-size</span>: <span class="hljs-number">28px</span>;</span><br><span class="css">        <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">700</span>;</span><br><span class="css">        <span class="hljs-attribute">text-align</span>: center;</span><br><span class="css">      &#125;</span><br><span class="css">      <span class="hljs-selector-class">.border</span> &#123;</span><br><span class="css">        <span class="hljs-attribute">border</span>: <span class="hljs-number">5px</span> solid green;</span><br><span class="css">      &#125;</span><br><span class="css">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;box font&quot;</span>&gt;</span>box<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>切换字体样式<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span><br><span class="javascript">      <span class="hljs-keyword">var</span> box = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;.box&#x27;</span>)</span><br><span class="javascript">      <span class="hljs-built_in">console</span>.log(box.classList) <span class="hljs-comment">// DOMTokenList(2) [&quot;box&quot;, &quot;font&quot;, value: &quot;box font&quot;]</span></span><br><span class="javascript">      box.classList.remove(<span class="hljs-string">&#x27;font&#x27;</span>)</span><br><span class="javascript">      box.classList.add(<span class="hljs-string">&#x27;border&#x27;</span>)</span><br><span class="javascript">      <span class="hljs-built_in">console</span>.log(box.classList) <span class="hljs-comment">// 也是一个伪数组</span></span><br><span class="javascript"></span><br><span class="javascript">      <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&#x27;button&#x27;</span>).addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;</span><br><span class="javascript">        box.classList.toggle(<span class="hljs-string">&#x27;font&#x27;</span>)</span><br><span class="javascript">      &#125;)</span><br><span class="javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><h4><span id="windowgetcomputedstyle">window.getComputedStyle</span></h4><p>通过 element.sytle.xxx 只能获取到内联样式,也就是采用 style属性定义的样式（权重最高）</p>
+<p>借助 window.getComputedStyle 可以获取应用到元素上的所有样式，IE8或更低版本不支持此方法。</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">window</span>.getComputedStyle(box).border) <span class="hljs-comment">// 5px solid rgb(0, 128, 0)</span><br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/dom%E6%93%8D%E4%BD%9C/">dom操作</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/02/instanceof%E4%BD%9C%E7%94%A8%E5%8F%8A%E5%8E%9F%E7%90%86/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">instanceof作用及原理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/02/TCPIP%E5%88%86%E5%B1%82%E7%AE%A1%E7%90%86/">
+                        <span class="hidden-mobile">TCP/IP 分层管理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

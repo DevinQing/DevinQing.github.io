@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>hexo博客中插入图片 - DevinQing</title>
+  <title>instanceof作用及原理 - DevinQing</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,9 +163,9 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="hexo博客中插入图片">
+            <span class="h2" id="subtitle" title="instanceof作用及原理">
               
-                hexo博客中插入图片
+                instanceof作用及原理
               
             </span>
 
@@ -175,8 +175,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-26 21:06" pubdate>
-        2021年6月26日 晚上
+      <time datetime="2021-07-02 22:13" pubdate>
+        2021年7月2日 晚上
       </time>
     </span>
   
@@ -187,7 +187,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      528 字
+      357 字
     </span>
   
 
@@ -197,7 +197,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9
+      4
        分钟
     </span>
   
@@ -235,25 +235,28 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">hexo博客中插入图片</h1>
+            <h1 style="display: none">instanceof作用及原理</h1>
             
             <div class="markdown-body">
-              <h1><span id="第一步安装插件">第一步：安装插件</span></h1><p>在hexo根目录打开Git Bash,执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs undefined">npm install hexo-asset-image --save<br></code></pre></td></tr></table></figure>
+              <h1><span id="使用场景">使用场景</span></h1><p>instanceof 返回一个布尔值，主要用于判断某对象是不是某个类的实例对象</p>
+<p>比如 判断 new Date() 是不是 Date 类的实例对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> a = <span class="hljs-string">&quot;abc&quot;</span>;<br>    <span class="hljs-built_in">console</span>.log(a <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">String</span>); <span class="hljs-comment">// false</span><br><br>    <span class="hljs-keyword">const</span> b = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;abc&quot;</span>);<br>    <span class="hljs-built_in">console</span>.log(b <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">String</span>); <span class="hljs-comment">// true</span><br><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">String</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">String</span>); <span class="hljs-comment">// false</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Object</span>); <span class="hljs-comment">// true</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Function</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Function</span>); <span class="hljs-comment">// true</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Function</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Object</span>); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
 
-<h1><span id="第二步打开hexo的配置文件_configyml">第二步：打开hexo的配置文件_config.yml</span></h1><p>找到 post_asset_folder，把这个选项从false改成true</p>
-<h1><span id="第三步修改模块代码">第三步：修改模块代码</span></h1><p>打开如下js文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs undefined">/node_modules/hexo-asset-image/index.js<br></code></pre></td></tr></table></figure>
+<h1><span id="原理">原理</span></h1><p><code>instanceof</code> 运算符用于测试构造函数的 <code>prototype</code> 属性是否出现在对象原型链中的任何位置</p>
+<p>B(Person) 的 <code>prototype</code> 所指向的原型对象确实在 A(p1) 的原型链上，所以我们可以确定 <code>p1 instanceof Person</code> 一定是为 <code>true</code> 的</p>
+<p>换句话说，如果<code>A instanceof B</code>，那么 <code>A</code> 必须是一个对象，而 <code>B</code> 必须是一个合法的 JavaScript 函数。在这两个条件都满足的情况下：</p>
+<p>判断 B 的 prototype 属性指向的原型对象(B.prototype)是否在对象 A 的原型链上。</p>
+<p>如果在，则为 true；如果不在，则为 false。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span>(<span class="hljs-params"></span>) </span>&#123;&#125; <span class="hljs-keyword">const</span> p1 = <span class="hljs-keyword">new</span> Person();p1 <span class="hljs-keyword">instanceof</span> Person; <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
 
-<p>将内容更换为下面的代码<br> （在此感谢Ericam_ 大神：<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://blog.csdn.net/xjm850552586">https://blog.csdn.net/xjm850552586</a>）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-string">&#x27;use strict&#x27;</span>;<br>var cheerio = require(<span class="hljs-string">&#x27;cheerio&#x27;</span>);<br><br>// http://stackoverflow.com/questions/14480345/how-to-get-the-nth-occurrence-in-a-string<br><span class="hljs-keyword">function</span> getPosition(str, m, i) &#123;<br>  <span class="hljs-built_in">return</span> str.split(m, i).join(m).length;<br>&#125;<br><br>var version = String(hexo.version).split(<span class="hljs-string">&#x27;.&#x27;</span>);<br>hexo.extend.filter.register(<span class="hljs-string">&#x27;after_post_render&#x27;</span>, <span class="hljs-keyword">function</span>(data)&#123;<br>  var config = hexo.config;<br>  <span class="hljs-keyword">if</span>(config.post_asset_folder)&#123;<br>        var link = data.permalink;<br>    <span class="hljs-keyword">if</span>(version.length &gt; 0 &amp;&amp; Number(version[0]) == 3)<br>       var beginPos = getPosition(link, <span class="hljs-string">&#x27;/&#x27;</span>, 1) + 1;<br>    <span class="hljs-keyword">else</span><br>       var beginPos = getPosition(link, <span class="hljs-string">&#x27;/&#x27;</span>, 3) + 1;<br>    // In hexo 3.1.1, the permalink of <span class="hljs-string">&quot;about&quot;</span> page is like <span class="hljs-string">&quot;.../about/index.html&quot;</span>.<br>    var endPos = link.lastIndexOf(<span class="hljs-string">&#x27;/&#x27;</span>) + 1;<br>    link = link.substring(beginPos, endPos);<br><br>    var toprocess = [<span class="hljs-string">&#x27;excerpt&#x27;</span>, <span class="hljs-string">&#x27;more&#x27;</span>, <span class="hljs-string">&#x27;content&#x27;</span>];<br>    <span class="hljs-keyword">for</span>(var i = 0; i &lt; toprocess.length; i++)&#123;<br>      var key = toprocess[i];<br> <br>      var $ = cheerio.load(data[key], &#123;<br>        ignoreWhitespace: <span class="hljs-literal">false</span>,<br>        xmlMode: <span class="hljs-literal">false</span>,<br>        lowerCaseTags: <span class="hljs-literal">false</span>,<br>        decodeEntities: <span class="hljs-literal">false</span><br>      &#125;);<br><br>      $(<span class="hljs-string">&#x27;img&#x27;</span>).each(<span class="hljs-function"><span class="hljs-title">function</span></span>()&#123;<br>        <span class="hljs-keyword">if</span> ($(this).attr(<span class="hljs-string">&#x27;src&#x27;</span>))&#123;<br>            // For windows style path, we replace <span class="hljs-string">&#x27;\&#x27;</span> to <span class="hljs-string">&#x27;/&#x27;</span>.<br>            var src = $(this).attr(<span class="hljs-string">&#x27;src&#x27;</span>).replace(<span class="hljs-string">&#x27;\\&#x27;</span>, <span class="hljs-string">&#x27;/&#x27;</span>);<br>            <span class="hljs-keyword">if</span>(!/http[s]*.*|\/\/.*/.<span class="hljs-built_in">test</span>(src) &amp;&amp;<br>               !/^\s*\//.<span class="hljs-built_in">test</span>(src)) &#123;<br>              // For <span class="hljs-string">&quot;about&quot;</span> page, the first part of <span class="hljs-string">&quot;src&quot;</span> can<span class="hljs-string">&#x27;t be removed.</span><br><span class="hljs-string">              // In addition, to support multi-level local directory.</span><br><span class="hljs-string">              var linkArray = link.split(&#x27;</span>/<span class="hljs-string">&#x27;).filter(function(elem)&#123;</span><br><span class="hljs-string">                return elem != &#x27;</span><span class="hljs-string">&#x27;;</span><br><span class="hljs-string">              &#125;);</span><br><span class="hljs-string">              var srcArray = src.split(&#x27;</span>/<span class="hljs-string">&#x27;).filter(function(elem)&#123;</span><br><span class="hljs-string">                return elem != &#x27;</span><span class="hljs-string">&#x27; &amp;&amp; elem != &#x27;</span>.<span class="hljs-string">&#x27;;</span><br><span class="hljs-string">              &#125;);</span><br><span class="hljs-string">              if(srcArray.length &gt; 1)</span><br><span class="hljs-string">                srcArray.shift();</span><br><span class="hljs-string">              src = srcArray.join(&#x27;</span>/<span class="hljs-string">&#x27;);</span><br><span class="hljs-string">              $(this).attr(&#x27;</span>src<span class="hljs-string">&#x27;, config.root + link + src);</span><br><span class="hljs-string">              console.info&amp;&amp;console.info(&quot;update link as:--&gt;&quot;+config.root + link + src);</span><br><span class="hljs-string">            &#125;</span><br><span class="hljs-string">        &#125;else&#123;</span><br><span class="hljs-string">            console.info&amp;&amp;console.info(&quot;no src attr, skipped...&quot;);</span><br><span class="hljs-string">            console.info&amp;&amp;console.info($(this));</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">      &#125;);</span><br><span class="hljs-string">      data[key] = $.html();</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">  &#125;</span><br><span class="hljs-string">&#125;);</span><br></code></pre></td></tr></table></figure>
+<p>总结：</p>
+<ul>
+<li>所有 JavaScript 对象都有 <code>__proto__</code> 属性，只有 <code>Object.prototype.__proto__ === null</code> ；</li>
+<li>构造函数的 <code>prototype</code> 属性指向它的原型对象，而构造函数实例的 <code>__proto__</code> 属性也指向该原型对象；</li>
+</ul>
+<p><img src="/img/16a1ec1ba426bde0" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h1><span id="实现instanceof函数">实现instanceof函数</span></h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">instance</span>(<span class="hljs-params">L, R</span>) </span>&#123;<br>      <span class="hljs-keyword">let</span> O = R.prototype<br>      L = L.__proto__<br>      <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>        <span class="hljs-keyword">if</span> (L === <span class="hljs-literal">null</span>) &#123;<br>          <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>        &#125;<br>        <span class="hljs-keyword">if</span> (O === L) &#123;<br>          <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>        &#125;<br>        L = L.__proto__<br>      &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
 
-<h1><span id="第四步插入图片">第四步：插入图片</span></h1><p>比如我写好一个 md ，然后我采用 ctrl + f 查找 md文件 的文件名 替换为 .</p>
-<p><img src="/2021/06/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/image-20210626211018298.png" srcset="/img/loading.gif" lazyload alt="image-20210626211018298"></p>
-<p><img src="/2021/06/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/liu.jpg" srcset="/img/loading.gif" lazyload alt="liu"></p>
-<p>然后在静态资源中就能正常显示图片了</p>
-<h1><span id="另外">另外</span></h1><p>很多主题都有自己的方法插入图片的方法，比如我现在使用的fluid主题</p>
-<p>参考链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f72aaad7b852">https://www.jianshu.com/p/f72aaad7b852</a></p>
 
             </div>
             <hr>
@@ -263,7 +266,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/">博客使用技巧</a>
+                      <a class="hover-with-bg" href="/categories/JavaScript/">JavaScript</a>
                     
                   </div>
                 
@@ -271,7 +274,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/">博客插入图片</a>
+                      <a class="hover-with-bg" href="/tags/instanceof/">instanceof</a>
                     
                   </div>
                 
@@ -288,15 +291,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/01/Vue%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Vue的基础语法</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2021/07/02/dom%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/">
+                        <span class="hidden-mobile">dom 的常见操作</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

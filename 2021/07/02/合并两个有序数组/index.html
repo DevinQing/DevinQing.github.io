@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>hexo博客中插入图片 - DevinQing</title>
+  <title>合并两个有序数组 - DevinQing</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,9 +163,9 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="hexo博客中插入图片">
+            <span class="h2" id="subtitle" title="合并两个有序数组">
               
-                hexo博客中插入图片
+                合并两个有序数组
               
             </span>
 
@@ -175,8 +175,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-26 21:06" pubdate>
-        2021年6月26日 晚上
+      <time datetime="2021-07-02 09:09" pubdate>
+        2021年7月2日 上午
       </time>
     </span>
   
@@ -187,7 +187,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      528 字
+      659 字
     </span>
   
 
@@ -235,25 +235,43 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">hexo博客中插入图片</h1>
+            <h1 style="display: none">合并两个有序数组</h1>
             
             <div class="markdown-body">
-              <h1><span id="第一步安装插件">第一步：安装插件</span></h1><p>在hexo根目录打开Git Bash,执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs undefined">npm install hexo-asset-image --save<br></code></pre></td></tr></table></figure>
+              <h1><span id="88合并有序数组">（88）合并有序数组</span></h1><h2><span id="题目描述">题目描述</span></h2><p>给你两个有序整数数组 nums1 和 nums2，请你将 nums2 合并到 nums1 中，使 nums1 成为一个有序数组。</p>
+<p>初始化 nums1 和 nums2 的元素数量分别为 m 和 n 。你可以假设 nums1 的空间大小等于 m + n，这样它就有足够的空间保存来自 nums2 的元素。</p>
+<p><strong>示例</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js">输入：nums1 = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>], m = <span class="hljs-number">3</span>, nums2 = [<span class="hljs-number">2</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>], n = <span class="hljs-number">3</span><br>输出：[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]<br></code></pre></td></tr></table></figure>
 
-<h1><span id="第二步打开hexo的配置文件_configyml">第二步：打开hexo的配置文件_config.yml</span></h1><p>找到 post_asset_folder，把这个选项从false改成true</p>
-<h1><span id="第三步修改模块代码">第三步：修改模块代码</span></h1><p>打开如下js文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs undefined">/node_modules/hexo-asset-image/index.js<br></code></pre></td></tr></table></figure>
+<h2><span id="解题">解题</span></h2><h3><span id="解法一合并后排序">解法一：合并后排序</span></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],<br>      m = <span class="hljs-number">3</span>,<br>      nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>],<br>      n = <span class="hljs-number">3</span><br>    <span class="hljs-keyword">var</span> merge = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">nums1, m, nums2, n</span>) </span>&#123;<br>      nums1.splice(m, nums1.length - m, ...nums2)<br>      nums1.sort(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a - b)<br>      <span class="hljs-keyword">return</span> nums1<br>    &#125;<br></code></pre></td></tr></table></figure>
 
-<p>将内容更换为下面的代码<br> （在此感谢Ericam_ 大神：<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://blog.csdn.net/xjm850552586">https://blog.csdn.net/xjm850552586</a>）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-string">&#x27;use strict&#x27;</span>;<br>var cheerio = require(<span class="hljs-string">&#x27;cheerio&#x27;</span>);<br><br>// http://stackoverflow.com/questions/14480345/how-to-get-the-nth-occurrence-in-a-string<br><span class="hljs-keyword">function</span> getPosition(str, m, i) &#123;<br>  <span class="hljs-built_in">return</span> str.split(m, i).join(m).length;<br>&#125;<br><br>var version = String(hexo.version).split(<span class="hljs-string">&#x27;.&#x27;</span>);<br>hexo.extend.filter.register(<span class="hljs-string">&#x27;after_post_render&#x27;</span>, <span class="hljs-keyword">function</span>(data)&#123;<br>  var config = hexo.config;<br>  <span class="hljs-keyword">if</span>(config.post_asset_folder)&#123;<br>        var link = data.permalink;<br>    <span class="hljs-keyword">if</span>(version.length &gt; 0 &amp;&amp; Number(version[0]) == 3)<br>       var beginPos = getPosition(link, <span class="hljs-string">&#x27;/&#x27;</span>, 1) + 1;<br>    <span class="hljs-keyword">else</span><br>       var beginPos = getPosition(link, <span class="hljs-string">&#x27;/&#x27;</span>, 3) + 1;<br>    // In hexo 3.1.1, the permalink of <span class="hljs-string">&quot;about&quot;</span> page is like <span class="hljs-string">&quot;.../about/index.html&quot;</span>.<br>    var endPos = link.lastIndexOf(<span class="hljs-string">&#x27;/&#x27;</span>) + 1;<br>    link = link.substring(beginPos, endPos);<br><br>    var toprocess = [<span class="hljs-string">&#x27;excerpt&#x27;</span>, <span class="hljs-string">&#x27;more&#x27;</span>, <span class="hljs-string">&#x27;content&#x27;</span>];<br>    <span class="hljs-keyword">for</span>(var i = 0; i &lt; toprocess.length; i++)&#123;<br>      var key = toprocess[i];<br> <br>      var $ = cheerio.load(data[key], &#123;<br>        ignoreWhitespace: <span class="hljs-literal">false</span>,<br>        xmlMode: <span class="hljs-literal">false</span>,<br>        lowerCaseTags: <span class="hljs-literal">false</span>,<br>        decodeEntities: <span class="hljs-literal">false</span><br>      &#125;);<br><br>      $(<span class="hljs-string">&#x27;img&#x27;</span>).each(<span class="hljs-function"><span class="hljs-title">function</span></span>()&#123;<br>        <span class="hljs-keyword">if</span> ($(this).attr(<span class="hljs-string">&#x27;src&#x27;</span>))&#123;<br>            // For windows style path, we replace <span class="hljs-string">&#x27;\&#x27;</span> to <span class="hljs-string">&#x27;/&#x27;</span>.<br>            var src = $(this).attr(<span class="hljs-string">&#x27;src&#x27;</span>).replace(<span class="hljs-string">&#x27;\\&#x27;</span>, <span class="hljs-string">&#x27;/&#x27;</span>);<br>            <span class="hljs-keyword">if</span>(!/http[s]*.*|\/\/.*/.<span class="hljs-built_in">test</span>(src) &amp;&amp;<br>               !/^\s*\//.<span class="hljs-built_in">test</span>(src)) &#123;<br>              // For <span class="hljs-string">&quot;about&quot;</span> page, the first part of <span class="hljs-string">&quot;src&quot;</span> can<span class="hljs-string">&#x27;t be removed.</span><br><span class="hljs-string">              // In addition, to support multi-level local directory.</span><br><span class="hljs-string">              var linkArray = link.split(&#x27;</span>/<span class="hljs-string">&#x27;).filter(function(elem)&#123;</span><br><span class="hljs-string">                return elem != &#x27;</span><span class="hljs-string">&#x27;;</span><br><span class="hljs-string">              &#125;);</span><br><span class="hljs-string">              var srcArray = src.split(&#x27;</span>/<span class="hljs-string">&#x27;).filter(function(elem)&#123;</span><br><span class="hljs-string">                return elem != &#x27;</span><span class="hljs-string">&#x27; &amp;&amp; elem != &#x27;</span>.<span class="hljs-string">&#x27;;</span><br><span class="hljs-string">              &#125;);</span><br><span class="hljs-string">              if(srcArray.length &gt; 1)</span><br><span class="hljs-string">                srcArray.shift();</span><br><span class="hljs-string">              src = srcArray.join(&#x27;</span>/<span class="hljs-string">&#x27;);</span><br><span class="hljs-string">              $(this).attr(&#x27;</span>src<span class="hljs-string">&#x27;, config.root + link + src);</span><br><span class="hljs-string">              console.info&amp;&amp;console.info(&quot;update link as:--&gt;&quot;+config.root + link + src);</span><br><span class="hljs-string">            &#125;</span><br><span class="hljs-string">        &#125;else&#123;</span><br><span class="hljs-string">            console.info&amp;&amp;console.info(&quot;no src attr, skipped...&quot;);</span><br><span class="hljs-string">            console.info&amp;&amp;console.info($(this));</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">      &#125;);</span><br><span class="hljs-string">      data[key] = $.html();</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">  &#125;</span><br><span class="hljs-string">&#125;);</span><br></code></pre></td></tr></table></figure>
+<h4><span id="复杂度分析">复杂度分析：</span></h4><ul>
+<li><p>时间复杂度： O((m + n) log(m + n))</p>
+<p>排序序列长度为 m + n，套用快速排序的时间复杂度即可，平均情况为 O((m + n) log(m + n))</p>
+</li>
+<li><p>空间复杂度：O(log(m + n))<br>排序序列长度为 m + n，套用快速排序的空间复杂度即可，平均情况为 O(log(m + n))。</p>
+</li>
+</ul>
+<h3><span id="解法二双指针">解法二：双指针</span></h3><p>方法一没有利用两数组已经被排序的性质。为了利用这一性质，我们可以使用双指针方法。</p>
+<p><img src="/img/%E7%AE%97%E6%B3%9588%E5%9B%BE%E4%B8%80.gif" srcset="/img/loading.gif" lazyload alt="算法88图一"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> nums1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],<br>      m = <span class="hljs-number">3</span>,<br>      nums2 = [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>],<br>      n = <span class="hljs-number">3</span><br><br>    <span class="hljs-keyword">var</span> merge = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">nums1, m, nums2, n</span>) </span>&#123;<br>      <span class="hljs-keyword">const</span> sort = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(m + n).fill(<span class="hljs-number">0</span>)<br>      <span class="hljs-keyword">let</span> p1 = <span class="hljs-number">0</span><br>      <span class="hljs-keyword">let</span> p2 = <span class="hljs-number">0</span><br>      <span class="hljs-keyword">let</span> cur<br>      <span class="hljs-keyword">while</span> (p1 &lt; m || p2 &lt; n) &#123;<br>        <span class="hljs-keyword">if</span> (p1 == m) &#123;<br>          cur = nums2[p2++]<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (p2 == n) &#123;<br>          cur = nums1[p1++]<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums1[p1] &gt; nums2[p2]) &#123;<br>          cur = nums2[p2++]<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>          cur = nums1[p1++]<br>        &#125;<br>        sort[p1 + p2 - <span class="hljs-number">1</span>] = cur<br>      &#125;<br>      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; m + n; i++) &#123;<br>        nums1[i] = sort[i]<br>      &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
 
-<h1><span id="第四步插入图片">第四步：插入图片</span></h1><p>比如我写好一个 md ，然后我采用 ctrl + f 查找 md文件 的文件名 替换为 .</p>
-<p><img src="/2021/06/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/image-20210626211018298.png" srcset="/img/loading.gif" lazyload alt="image-20210626211018298"></p>
-<p><img src="/2021/06/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/liu.jpg" srcset="/img/loading.gif" lazyload alt="liu"></p>
-<p>然后在静态资源中就能正常显示图片了</p>
-<h1><span id="另外">另外</span></h1><p>很多主题都有自己的方法插入图片的方法，比如我现在使用的fluid主题</p>
-<p>参考链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f72aaad7b852">https://www.jianshu.com/p/f72aaad7b852</a></p>
+<h4><span id="复杂度分析">复杂度分析：</span></h4><ul>
+<li><p>时间复杂度：O(m+n)。<br>指针移动单调递增，最多移动 m+n 次，因此时间复杂度为 O(m+n)。</p>
+</li>
+<li><p>空间复杂度：O(m+n)。<br>需要建立长度为 m+n 的中间数组 sorted。</p>
+</li>
+</ul>
+<h3><span id="解法三逆向双指针">解法三：逆向双指针</span></h3><p>方法二没有利用 nums1 的空间永远足够的条件</p>
+<p>我们可以用逆向双指针直接在 nums1 上原地修改从而节约空间</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> merge = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">nums1, m, nums2, n</span>) </span>&#123;<br>        <span class="hljs-keyword">let</span> p1 = m - <span class="hljs-number">1</span><br>        <span class="hljs-keyword">let</span> p2 = n - <span class="hljs-number">1</span><br>        <span class="hljs-keyword">let</span> tail = m + n - <span class="hljs-number">1</span><br>        <span class="hljs-keyword">let</span> cur<br>        <span class="hljs-keyword">while</span> (p1 &gt;= <span class="hljs-number">0</span> || p2 &gt;= <span class="hljs-number">0</span>) &#123;<br>          <span class="hljs-keyword">if</span> (p1 == -<span class="hljs-number">1</span>) &#123;<br>            cur = nums2[p2--]<br>          &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (p2 == -<span class="hljs-number">1</span>) &#123;<br>            cur = nums1[p1--]<br>          &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums1[p1] &gt; nums2[p2]) &#123;<br>            cur = nums1[p1--]<br>          &#125; <span class="hljs-keyword">else</span> &#123;<br>            cur = nums2[p2--]<br>          &#125;<br>          nums1[tail--] = cur<br>        &#125;<br>      &#125;<br></code></pre></td></tr></table></figure>
+
+<h4><span id="复杂度分析">复杂度分析：</span></h4><ul>
+<li><p>时间复杂度：O(m+n)<br>指针移动单调递减，最多移动 m+n 次，因此时间复杂度为 O(m+n)。</p>
+</li>
+<li><p>空间复杂度：O(1)。<br>直接对数组 nums 1原地修改，不需要额外空间。</p>
+</li>
+</ul>
 
             </div>
             <hr>
@@ -263,7 +281,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/">博客使用技巧</a>
+                      <a class="hover-with-bg" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
                     
                   </div>
                 
@@ -271,7 +289,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/">博客插入图片</a>
+                      <a class="hover-with-bg" href="/tags/%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E5%90%88%E5%B9%B6/">有序数组合并</a>
                     
                   </div>
                 
@@ -288,15 +306,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/01/Vue%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95/">
+                      <a href="/2021/07/02/ajax/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Vue的基础语法</span>
+                        <span class="hidden-mobile">Ajax</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2021/07/02/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%8A%A0/">
+                        <span class="hidden-mobile">字符串相加</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

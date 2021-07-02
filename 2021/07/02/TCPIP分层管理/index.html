@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>hexo博客中插入图片 - DevinQing</title>
+  <title>TCP/IP 分层管理 - DevinQing</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,9 +163,9 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="hexo博客中插入图片">
+            <span class="h2" id="subtitle" title="TCP/IP 分层管理">
               
-                hexo博客中插入图片
+                TCP/IP 分层管理
               
             </span>
 
@@ -175,8 +175,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-26 21:06" pubdate>
-        2021年6月26日 晚上
+      <time datetime="2021-07-02 11:32" pubdate>
+        2021年7月2日 中午
       </time>
     </span>
   
@@ -187,7 +187,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      528 字
+      1.1k 字
     </span>
   
 
@@ -197,7 +197,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9
+      11
        分钟
     </span>
   
@@ -235,25 +235,48 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">hexo博客中插入图片</h1>
+            <h1 style="display: none">TCP/IP 分层管理</h1>
             
             <div class="markdown-body">
-              <h1><span id="第一步安装插件">第一步：安装插件</span></h1><p>在hexo根目录打开Git Bash,执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs undefined">npm install hexo-asset-image --save<br></code></pre></td></tr></table></figure>
-
-<h1><span id="第二步打开hexo的配置文件_configyml">第二步：打开hexo的配置文件_config.yml</span></h1><p>找到 post_asset_folder，把这个选项从false改成true</p>
-<h1><span id="第三步修改模块代码">第三步：修改模块代码</span></h1><p>打开如下js文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs undefined">/node_modules/hexo-asset-image/index.js<br></code></pre></td></tr></table></figure>
-
-<p>将内容更换为下面的代码<br> （在此感谢Ericam_ 大神：<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://blog.csdn.net/xjm850552586">https://blog.csdn.net/xjm850552586</a>）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-string">&#x27;use strict&#x27;</span>;<br>var cheerio = require(<span class="hljs-string">&#x27;cheerio&#x27;</span>);<br><br>// http://stackoverflow.com/questions/14480345/how-to-get-the-nth-occurrence-in-a-string<br><span class="hljs-keyword">function</span> getPosition(str, m, i) &#123;<br>  <span class="hljs-built_in">return</span> str.split(m, i).join(m).length;<br>&#125;<br><br>var version = String(hexo.version).split(<span class="hljs-string">&#x27;.&#x27;</span>);<br>hexo.extend.filter.register(<span class="hljs-string">&#x27;after_post_render&#x27;</span>, <span class="hljs-keyword">function</span>(data)&#123;<br>  var config = hexo.config;<br>  <span class="hljs-keyword">if</span>(config.post_asset_folder)&#123;<br>        var link = data.permalink;<br>    <span class="hljs-keyword">if</span>(version.length &gt; 0 &amp;&amp; Number(version[0]) == 3)<br>       var beginPos = getPosition(link, <span class="hljs-string">&#x27;/&#x27;</span>, 1) + 1;<br>    <span class="hljs-keyword">else</span><br>       var beginPos = getPosition(link, <span class="hljs-string">&#x27;/&#x27;</span>, 3) + 1;<br>    // In hexo 3.1.1, the permalink of <span class="hljs-string">&quot;about&quot;</span> page is like <span class="hljs-string">&quot;.../about/index.html&quot;</span>.<br>    var endPos = link.lastIndexOf(<span class="hljs-string">&#x27;/&#x27;</span>) + 1;<br>    link = link.substring(beginPos, endPos);<br><br>    var toprocess = [<span class="hljs-string">&#x27;excerpt&#x27;</span>, <span class="hljs-string">&#x27;more&#x27;</span>, <span class="hljs-string">&#x27;content&#x27;</span>];<br>    <span class="hljs-keyword">for</span>(var i = 0; i &lt; toprocess.length; i++)&#123;<br>      var key = toprocess[i];<br> <br>      var $ = cheerio.load(data[key], &#123;<br>        ignoreWhitespace: <span class="hljs-literal">false</span>,<br>        xmlMode: <span class="hljs-literal">false</span>,<br>        lowerCaseTags: <span class="hljs-literal">false</span>,<br>        decodeEntities: <span class="hljs-literal">false</span><br>      &#125;);<br><br>      $(<span class="hljs-string">&#x27;img&#x27;</span>).each(<span class="hljs-function"><span class="hljs-title">function</span></span>()&#123;<br>        <span class="hljs-keyword">if</span> ($(this).attr(<span class="hljs-string">&#x27;src&#x27;</span>))&#123;<br>            // For windows style path, we replace <span class="hljs-string">&#x27;\&#x27;</span> to <span class="hljs-string">&#x27;/&#x27;</span>.<br>            var src = $(this).attr(<span class="hljs-string">&#x27;src&#x27;</span>).replace(<span class="hljs-string">&#x27;\\&#x27;</span>, <span class="hljs-string">&#x27;/&#x27;</span>);<br>            <span class="hljs-keyword">if</span>(!/http[s]*.*|\/\/.*/.<span class="hljs-built_in">test</span>(src) &amp;&amp;<br>               !/^\s*\//.<span class="hljs-built_in">test</span>(src)) &#123;<br>              // For <span class="hljs-string">&quot;about&quot;</span> page, the first part of <span class="hljs-string">&quot;src&quot;</span> can<span class="hljs-string">&#x27;t be removed.</span><br><span class="hljs-string">              // In addition, to support multi-level local directory.</span><br><span class="hljs-string">              var linkArray = link.split(&#x27;</span>/<span class="hljs-string">&#x27;).filter(function(elem)&#123;</span><br><span class="hljs-string">                return elem != &#x27;</span><span class="hljs-string">&#x27;;</span><br><span class="hljs-string">              &#125;);</span><br><span class="hljs-string">              var srcArray = src.split(&#x27;</span>/<span class="hljs-string">&#x27;).filter(function(elem)&#123;</span><br><span class="hljs-string">                return elem != &#x27;</span><span class="hljs-string">&#x27; &amp;&amp; elem != &#x27;</span>.<span class="hljs-string">&#x27;;</span><br><span class="hljs-string">              &#125;);</span><br><span class="hljs-string">              if(srcArray.length &gt; 1)</span><br><span class="hljs-string">                srcArray.shift();</span><br><span class="hljs-string">              src = srcArray.join(&#x27;</span>/<span class="hljs-string">&#x27;);</span><br><span class="hljs-string">              $(this).attr(&#x27;</span>src<span class="hljs-string">&#x27;, config.root + link + src);</span><br><span class="hljs-string">              console.info&amp;&amp;console.info(&quot;update link as:--&gt;&quot;+config.root + link + src);</span><br><span class="hljs-string">            &#125;</span><br><span class="hljs-string">        &#125;else&#123;</span><br><span class="hljs-string">            console.info&amp;&amp;console.info(&quot;no src attr, skipped...&quot;);</span><br><span class="hljs-string">            console.info&amp;&amp;console.info($(this));</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">      &#125;);</span><br><span class="hljs-string">      data[key] = $.html();</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">  &#125;</span><br><span class="hljs-string">&#125;);</span><br></code></pre></td></tr></table></figure>
-
-<h1><span id="第四步插入图片">第四步：插入图片</span></h1><p>比如我写好一个 md ，然后我采用 ctrl + f 查找 md文件 的文件名 替换为 .</p>
-<p><img src="/2021/06/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/image-20210626211018298.png" srcset="/img/loading.gif" lazyload alt="image-20210626211018298"></p>
-<p><img src="/2021/06/26/hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/liu.jpg" srcset="/img/loading.gif" lazyload alt="liu"></p>
-<p>然后在静态资源中就能正常显示图片了</p>
-<h1><span id="另外">另外</span></h1><p>很多主题都有自己的方法插入图片的方法，比如我现在使用的fluid主题</p>
-<p>参考链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f72aaad7b852">https://www.jianshu.com/p/f72aaad7b852</a></p>
+              <h1><span id="tcpip-分层管理">TCP/IP 分层管理</span></h1><h2><span id="tcpip概念">TCP/IP概念</span></h2><p>TCP/IP（Transmission Control Protocol/Internet Protocol，传输控制协议/网际协议）是指能够在多个不同网络间实现信息传输的协议簇</p>
+<h2><span id="分层管理">分层管理</span></h2><h3><span id="目的">目的</span></h3><p>计算机网络是个非常复杂的系统，“分层”可将庞大而复杂的问题，转化为若干较小的局部问题，而这些较小的局部问题就比较容易研究和处理。“分层”还有利于对于协议进行改进和更新，当我们对某协议进行改动时，我们只需要处理好有关接口的问题，就可以在里面根据需求随意改动了。</p>
+<h3><span id="三种分层体系结构">三种分层体系结构</span></h3><h4><span id="osi体系结构">OSI体系结构</span></h4><p>为了使不同体系结构的计算机网络结构能互联<br>国际标准化组织提出了开放系统互联参考模型，即OSI结构体系，法律上的国际标准</p>
+<p><img src="/img/image-20210702113846713.png" srcset="/img/loading.gif" lazyload alt="image-20210702113846713"></p>
+<h4><span id="tcpip体系结构">TCP/IP体系结构</span></h4><p>应用最广的英特网使用 TCP/IP 协议族，并逐渐演化为TCP/IP 参考模型，也叫TCP/IP协议栈，是事实上的国际标准</p>
+<p><img src="/img/image-20210702114102308.png" srcset="/img/loading.gif" lazyload alt="image-20210702114102308"></p>
+<h4><span id="原理体系结构">原理体系结构</span></h4><p>我们用于学习和理解的一般是五层原理体系结构</p>
+<p><img src="/img/image-20210702114355165.png" srcset="/img/loading.gif" lazyload alt="image-20210702114355165"></p>
+<p>计算机网络是个非常复杂的系统，“分层”可将庞大而复杂的问题，转化为若干较小的局部问题，而这些较小的局部问题就比较容易研究和处理。“分层”还有利于对于协议进行改进和更新，当我们对某协议进行改动时，我们只需要处理好有关接口的问题，就可以在里面根据需求随意改动了。</p>
+<h3><span id="五层原理体系">五层原理体系</span></h3><h4><span id="物理层">物理层</span></h4><p>解决使用何种信号来传输比特的问题</p>
+<h4><span id="数据链路层">数据链路层</span></h4><p>解决分组在一个网络（或一段链路）上传输的问题</p>
+<p><strong>链路：</strong>就是从一个节点到相邻节点的一段物理线路，而中间没有任何其他的交换结点</p>
+<p><strong>数据链路：</strong>是指把实现通信协议的硬件和软件加到链路上，就构成了数据链路。</p>
+<p>数据链路层以帧为单位传输和处理数据。</p>
+<p>三个重要问题：</p>
+<ul>
+<li>封装成帧</li>
+<li>差错检测</li>
+<li>可靠传输</li>
+</ul>
+<h4><span id="网络层">网络层</span></h4><p>解决分组在多个网络传输（路由）的问题</p>
+<p>网络层主要任务是实现网络互联，进而实现数据包在各网络之间的传输</p>
+<p>要实现网络层任务，需要解决以下主要问题</p>
+<ul>
+<li><p>网络层向运输层提供怎样的服务（“可靠传输”还是“不可靠传输”）（“不可靠传输”是对可能会出现的误码，丢弃，失序等问题不采取任何措施，反之则为“可靠传输”）英特网使用的 TCP/IP 网际层使用的是无连接的不可靠的数据包服务</p>
+<p>由于英特网是用户数量最多的互联网，它使用的是 TCP/IP 协议栈，是整个协议栈的核心，所以TCP/IP协议栈中的网络层也称为网际层。我们通过 TCP/IP 协议栈的网际层来学习网络层的理论知识和实践技术</p>
+</li>
+<li><p>寻址问题</p>
+</li>
+<li><p>路由选择问题</p>
+</li>
+</ul>
+<h4><span id="运输层">运输层</span></h4><p>解决进程之间基于网络的通信问题</p>
+<p>物理层，数据链路层以及网络层共同解决了将主机通过异构网络互联起来所面临的问题，实现了主机到主机的通信<br>但实际上计算机网络中进行通信的真正实体是位于通信两端主机中的进程</p>
+<p>传输层解决如何为运行在不同主机上的应用进程提供直接的通信服务，运输层又称端到端协议</p>
+<p>在传输层有两个性质不同的协议: TCP ( Transmission ControlProtocol,传输控制协议)和UDP ( User Data Protocol,用户数据报协议)。</p>
+<h4><span id="应用层">应用层</span></h4><p>解决通过应用进程的交互来实现特定网络应用的问题</p>
+<p>应用层是计算机网络体系结构的最顶层，是设计和建立计算机网络的最终目的，也是计算机网络中发展最快的部分</p>
+<p>FTP ( FileTransfer Protocol,文件传输协议)和DNS ( Domain Name System，域名系统)服务就是其中两类。<br>HTTP协议也处于该层。</p>
 
             </div>
             <hr>
@@ -263,7 +286,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/">博客使用技巧</a>
+                      <a class="hover-with-bg" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
                     
                   </div>
                 
@@ -271,7 +294,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E5%8D%9A%E5%AE%A2%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/">博客插入图片</a>
+                      <a class="hover-with-bg" href="/tags/TCP-IP/">TCP/IP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%88%86%E5%B1%82%E7%AE%A1%E7%90%86/">分层管理</a>
                     
                   </div>
                 
@@ -288,15 +313,21 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/01/Vue%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95/">
+                      <a href="/2021/07/02/dom%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Vue的基础语法</span>
+                        <span class="hidden-mobile">dom 的常见操作</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2021/07/02/ajax/">
+                        <span class="hidden-mobile">Ajax</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>

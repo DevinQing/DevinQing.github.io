@@ -1,0 +1,526 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+  <title>三次握手四次挥手机制及原因 - DevinQing</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Devin Qing's space</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/gita.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="三次握手四次挥手机制及原因">
+              
+                三次握手四次挥手机制及原因
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-06 10:43" pubdate>
+        2021年7月6日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      30
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">三次握手四次挥手机制及原因</h1>
+            
+            <div class="markdown-body">
+              <h1><span id="三次握手四次挥手机制及原因">三次握手四次挥手机制及原因</span></h1><h2><span id="三次握手">三次握手</span></h2><h3><span id="一些基本概念"><strong>一些基本概念</strong></span></h3><p>传输控制协议（TCP，Transmission Control Protocol）是一种面向连接的、可靠的、基于<strong>字节流</strong>的传输层通信协议</p>
+<p>面向连接：网络系统需要在两台计算机之间发送数据之前先建立连接的一种特性。面向连接网络类似于电话系统，在开始通信前必须先进行一次呼叫和应答。</p>
+<p>所谓的<strong>字节流服务</strong>（Byte Stream Service）是指，为了方便传输，将大块数据分割成以<strong>报文段（segment）为单位的数据包</strong>进行管理。</p>
+<p><strong>报文：</strong>网络中交换与传输的数据单元，即站点一次性要发送的数据块。如果需要邮寄一个产品，报文指的就是你的产品本身，邮件信息（发送人，接收人，发送地，目的地等）</p>
+<p><strong>TCP报文</strong></p>
+<p><img src="/2021/07/06/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%9C%BA%E5%88%B6%E5%8F%8A%E5%8E%9F%E5%9B%A0/../public/img/aHR0cHM6Ly9rbm93bGVkZ2UtcGljdHVyZXMub3NzLWNuLWJlaWppbmcuYWxpeXVuY3MuY29tLyVFNyVCRCU5MSVFNyVCQiU5QyVFNyU5QiVCOCVFNSU4NSVCMyVFNyU5RiVBNSVFOCVBRiU4Ni90Y3AlRTYlOEElQTUlRTYlOTYlODcucG5n" srcset="/img/loading.gif" lazyload alt="tcp%E6%8A%A5%E6%96%87.png"></p>
+<p>上图中有几个字段需要重点介绍下：<br>（1）序号：Seq序号，占32位，用来标识从TCP源端向目的端发送的字节流，发起方发送数据时对此进行标记。<br>（2）确认序号：Ack序号，占32位，只有ACK标志位为1时，确认序号字段才有效，Ack=Seq+1。<br>（3）标志位：共6个，即URG、ACK、PSH、RST、SYN、FIN等，具体含义如下：<br>（A）URG：紧急指针（urgent pointer）有效。<br>（B）ACK：确认序号有效。<br>（C）PSH：接收方应该尽快将这个报文交给应用层。<br>（D）RST：重置连接。<br>（E）SYN：发起一个新连接。<br>（F）FIN：释放一个连接。</p>
+<p><strong>数据包（packet）：</strong>数据包是网络层传输的数据单元。也称为IP包，包中带有足够寻址信息(IP地址)，可独立地从源主机传输到目的主机。在报文数据较大时候，就像产品需要分成几个产品箱装，每个产品箱上面都还是有邮寄的信息。</p>
+<p><strong>数据段：</strong>数据段是传输层的信息单元。比如“目的IP地址”、“源IP地址”、“净载数据”等</p>
+<p><strong>例子：</strong>邮寄产品时，需要传输的数据是产品，数据包就是产品箱，而帧就是用来装产品箱的纸箱</p>
+<p>在路由器遇到大数据流量的情况下，可能在没有提示的情况下丢失数据包，而可靠的传输服务是指，能够把数据准确可靠地传给对方。一言以蔽之， TCP 协议为了更容易传送大数据会把数据分割成小数据包，每个小数据包由不同途径传输到目标机器，当到达目标机器时，数据会重新拼装在一起。</p>
+<p>TCP 协议能够确认数据最终是否送达到对方。 确保数据能到达目标为了准确无误地将数据送达目标处，TCP 协议采用了三次握手 （three-way handshaking）策略。</p>
+<p>TCP三次握手机制需要用到的标志位是 SYN（请求连接）和ACK（确认有效），一般使用时设置为1</p>
+<h3><span id="详细过程"><strong>详细过程</strong></span></h3><p><img src="/2021/07/06/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%9C%BA%E5%88%B6%E5%8F%8A%E5%8E%9F%E5%9B%A0/../public/img/image-20210602140654771.png" srcset="/img/loading.gif" lazyload alt="image-20210602140654771"></p>
+<p>刚开始客户端处于 Closed 的状态，服务端处于 Listen 状态</p>
+<p><strong>第一次握手:</strong><br>第一次握手：建立连接时，客户端发送<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/syn">syn</a>包（seq=x）到服务器，并进入<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/SYN_SENT">SYN_SENT</a>状态，等待服务器确认；</p>
+<p>SYN：同步序列编号（Synchronize Sequence Numbers）。</p>
+<p><img src="/2021/07/06/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%9C%BA%E5%88%B6%E5%8F%8A%E5%8E%9F%E5%9B%A0/../public/img/v2-5bfd5774a386f4a46c4a0c2f3d7a72cd_1440w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>第二次握手:</strong><br>服务器发回确认包(ACK)应答。即SYN标志位和ACK标志位均为1同时，将确认序号(Acknowledgement Number)X+1返回给客户端，同时自己发送一个SYN包序号为Y，服务器进入SYN_RECV状态。</p>
+<p><img src="/2021/07/06/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%9C%BA%E5%88%B6%E5%8F%8A%E5%8E%9F%E5%9B%A0/../public/img/v2-0b5c1fc7f3fad995376cdc67c1c855b5_1440w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><strong>第三次握手：</strong><br>客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK且确认序号为Y+1。发送完毕后客户端和服务器进入ESTABLIISH状态完成三次握手。</p>
+<p><img src="/2021/07/06/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%9C%BA%E5%88%B6%E5%8F%8A%E5%8E%9F%E5%9B%A0/../public/img/v2-615fd819c5c05386542dabdabb4b1d14_1440w.jpg" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3><span id="需要知道的知识点">需要知道的知识点</span></h3><ul>
+<li><p>需要文段不能携带数据，但要消耗掉一个序号。如果带数据的话会让服务器更加容易受到攻击。比如不断重复报文信息就会让服务器花很多时间来处理这个报文。</p>
+</li>
+<li><p>初始序列号不是固定的，当一端为建立连接而发送它的SYN时，它为连接选择一个初始序号。ISN随时间而变化，因此每个连接都将具有不同的ISN。如果 ISN 是固定的，攻击者很容易猜出后续的确认号，因此 ISN 是动态生成的。</p>
+</li>
+<li><p>半队列连接：服务器第一次收到客户端的 SYN 之后，就会处于 SYN_RCVD 状态，此时双方还没有完全建立其连接，服务器会把此种状态下请求连接放在一个队列里，我们把这种队列称之为半连接队列。</p>
+</li>
+<li><p>当然还有一个全连接队列，就是已经完成三次握手，建立起连接的就会放在全连接队列中。如果队列满了就有可能会出现丢包现象。</p>
+</li>
+<li><p>SYN-ACK 重传次数的问题：　服务器发送完SYN－ACK包，如果未收到客户确认包，服务器进行首次重传，等待一段时间仍未收到客户确认包，进行第二次重传，如果重传次数超 过系统规定的最大重传次数，系统将该连接信息从半连接队列中删除。注意，每次重传等待的时间不一定相同，一般会是指数增长，例如间隔时间为 1s, 2s, 4s, 8s, …</p>
+</li>
+<li><p>syn攻击：<strong>服务器端的资源分配是在二次握手时分配的，而客户端的资源是在完成三次握手时分配的</strong>，所以服务器容易受到SYN洪泛攻击。SYN攻击就是Client在短时间内伪造大量不存在的IP地址，并向Server不断地发送SYN包，Server则回复确认包，并等待Client确认，由于源地址不存在，因此Server需要不断重发直至超时，这些伪造的SYN包将长时间占用未连接队列，导致正常的SYN请求因为队列满而被丢弃，从而引起网络拥塞甚至系统瘫痪。SYN 攻击是一种典型的 DoS/DDoS 攻击。</p>
+<p>当你在服务器上看到大量的半连接状态时，特别是源IP地址是随机的，基本上可以断定这是一次SYN攻击</p>
+</li>
+</ul>
+<p><strong>如果建立连接后，客户端出现故障怎么办？</strong></p>
+<p>TCP还设有一个保活计时器，显然，客户端如果出现故障，服务器不能一直等下去，白白浪费资源。服务器每收到一次客户端的请求后都会重新复位这个计时器，时间通常是设置为2小时，若两小时还没有收到客户端的任何数据，服务器就会发送一个探测报文段，以后每隔75秒钟发送一次。若一连发送10个探测报文仍然没反应，服务器就认为客户端出了故障，接着就关闭连接。</p>
+<h3><span id="为什么三次握手比较合适">为什么三次握手比较合适：</span></h3><p>比如 </p>
+<ul>
+<li>听得见？（客户端发送一个SYN标记的包，Seq初始序列号x，发送完成后  客户端  进入<code>SYN_SEND</code>状态。）</li>
+<li>听得见，你呢？（服务器返回确认包(ACK)应答，同时还要发送一个SYN包回去。ACK = x + 1,表示确认收到(客户端发来的Seq值 + 1)，Seq = y, 表示让客户端确认是否能收到。发送完成后  服务端  进入<code>SYN_RCVD</code>状态。）</li>
+<li>听得见。（客户端再次发送确认包(ACK),ACK = y + 1, 表示确认收到服务器的包（服务端发来的Seq值 + 1）。客户端发送完毕后，进入ESTABLISHED状态，服务端接收到这个包，也进入<code>ESTABLISHED</code>状态, TCP握手结束。）</li>
+</ul>
+<p><img src="/2021/07/06/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%9C%BA%E5%88%B6%E5%8F%8A%E5%8E%9F%E5%9B%A0/../public/img/9658881-14388ff91eda35c6.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2><span id="四次挥手">四次挥手</span></h2><p>建立一个连接需要三次握手，而终止一个连接要经过四次挥手（也有将四次挥手叫做四次握手的）。这由TCP的<strong>半关闭</strong>（half-close）造成的。所谓的半关闭，其实就是TCP提供了连接的一端在结束它的发送后还能接收来自另一端数据的能力。</p>
+<p>TCP 的连接的拆除需要发送四个包，因此称为四次挥手(Four-way handshake)，客户端或服务器均可主动发起挥手动作。</p>
+<h3><span id="详细过程">详细过程</span></h3><p><img src="/2021/07/06/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%9C%BA%E5%88%B6%E5%8F%8A%E5%8E%9F%E5%9B%A0/../public/img/image-20210706112433971.png" srcset="/img/loading.gif" lazyload alt="image-20210706112433971"></p>
+<h4><span id="一次挥手"><strong>一次挥手</strong></span></h4><ul>
+<li>客户端打算关闭连接，此时会发送一个 TCP 首部 <code>FIN</code> 标志位被置为 <code>1</code> 的报文，也即 <code>FIN</code> 报文，之后客户端进入 <code>FIN_WAIT_1</code> 状态。</li>
+</ul>
+<h4><span id="二次挥手"><strong>二次挥手</strong></span></h4><ul>
+<li>服务端收到该报文后，就向客户端发送 <code>ACK</code> 应答报文，接着服务端进入 <code>CLOSED_WAIT</code> 状态。</li>
+</ul>
+<h4><span id="三次挥手"><strong>三次挥手</strong></span></h4><ul>
+<li>客户端收到服务端的 <code>ACK</code> 应答报文后，之后进入 <code>FIN_WAIT_2</code> 状态。等待服务端处理完数据后，也向客户端发送 <code>FIN</code> 报文，之后服务端进入 <code>LAST_ACK</code> 状态。</li>
+</ul>
+<h4><span id="四次挥手"><strong>四次挥手</strong></span></h4><ul>
+<li>客户端收到服务端的 <code>FIN</code> 报文后，回一个 <code>ACK</code> 应答报文，之后进入 <code>TIME_WAIT</code> 状态</li>
+<li>服务器收到了 <code>ACK</code> 应答报文后，就进入了 <code>CLOSED</code> 状态，至此服务端已经完成连接的关闭。</li>
+<li>客户端在经过 <code>2MSL</code> 一段时间后，自动进入 <code>CLOSED</code> 状态，至此客户端也完成连接的关闭。</li>
+</ul>
+<p>你可以看到，每个方向都需要<strong>一个 FIN 和一个 ACK</strong>，因此通常被称为<strong>四次挥手</strong>。</p>
+<p><img src="/2021/07/06/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%9C%BA%E5%88%B6%E5%8F%8A%E5%8E%9F%E5%9B%A0/../public/img/290fd6de63004c7396029b6d861bfe39~tplv-k3u1fbpfcp-zoom-1.image" srcset="/img/loading.gif" lazyload alt="四次挥手动态图示"></p>
+<h3><span id="为什么需要四次挥手">为什么需要四次挥手</span></h3><ul>
+<li>关闭连接时，客户端向服务端发送 <code>FIN</code> 时，仅仅表示客户端不再发送数据了但是还能接收数据。</li>
+<li>服务器收到客户端的 <code>FIN</code> 报文时，先回一个 <code>ACK</code> 应答报文，而服务端可能还有数据需要处理和发送，等服务端不再发送数据时，才发送 <code>FIN</code> 报文给客户端来表示同意现在关闭连接。</li>
+</ul>
+<h3><span id="为什么客户端在time-wait阶段要等2msl"><strong>为什么客户端在TIME-WAIT阶段要等2MSL？</strong></span></h3><p>为的是确认服务器端是否收到客户端发出的 ACK 确认报文，当客户端发出最后的 ACK 确认报文时，并不能确定服务器端能够收到该段报文。</p>
+<p>所以客户端在发送完 ACK 确认报文之后，会设置一个时长为 2MSL 的计时器。</p>
+<p>MSL 指的是 Maximum Segment Lifetime：一段 TCP 报文在传输过程中的最大生命周期。</p>
+<p>2MSL 即是服务器端发出为 FIN 报文和客户端发出的 ACK 确认报文所能保持有效的最大时长。</p>
+<p>服务器端在 1MSL 内没有收到客户端发出的 ACK 确认报文，就会再次向客户端发出 FIN 报文：</p>
+<ul>
+<li>如果客户端在 2MSL 内，再次收到了来自服务器端的 FIN 报文，说明服务器端由于各种原因没有接收到客户端发出的 ACK 确认报文。</li>
+</ul>
+<p>客户端再次向服务器端发出 ACK 确认报文，计时器重置，重新开始 2MSL 的计时。</p>
+<ul>
+<li>否则客户端在 2MSL 内没有再次收到来自服务器端的 FIN 报文，说明服务器端正常接收了 ACK 确认报文，客户端可以进入 CLOSED  阶段，完成“四次挥手”。</li>
+</ul>
+<p>所以，客户端要经历时长为 2SML 的 TIME-WAIT 阶段;这也是为什么客户端比服务器端晚进入 CLOSED 阶段的原因。</p>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6965544021833809928">https://juejin.cn/post/6965544021833809928</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/">计算机网络基础</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/http/">http</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B/">三次握手</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/">四次挥手</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/06/HTTP%E6%96%B9%E6%B3%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTTP方法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/06/location%E5%AF%B9%E8%B1%A1/">
+                        <span class="hidden-mobile">location对象</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

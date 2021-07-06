@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>instanceof作用及原理 - DevinQing</title>
+  <title>比较版本号 - DevinQing</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,9 +163,9 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="instanceof作用及原理">
+            <span class="h2" id="subtitle" title="比较版本号">
               
-                instanceof作用及原理
+                比较版本号
               
             </span>
 
@@ -175,8 +175,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-02 22:13" pubdate>
-        2021年7月2日 晚上
+      <time datetime="2021-07-06 08:30" pubdate>
+        2021年7月6日 早上
       </time>
     </span>
   
@@ -187,7 +187,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      357 字
+      439 字
     </span>
   
 
@@ -197,7 +197,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4
+      5
        分钟
     </span>
   
@@ -235,27 +235,18 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">instanceof作用及原理</h1>
+            <h1 style="display: none">比较版本号</h1>
             
             <div class="markdown-body">
-              <h1><span id="使用场景">使用场景</span></h1><p>instanceof 返回一个布尔值，主要用于判断某对象是不是某个类的实例对象</p>
-<p>比如 判断 new Date() 是不是 Date 类的实例对象</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> a = <span class="hljs-string">&quot;abc&quot;</span>;<br>    <span class="hljs-built_in">console</span>.log(a <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">String</span>); <span class="hljs-comment">// false</span><br><br>    <span class="hljs-keyword">const</span> b = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;abc&quot;</span>);<br>    <span class="hljs-built_in">console</span>.log(b <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">String</span>); <span class="hljs-comment">// true</span><br><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">String</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">String</span>); <span class="hljs-comment">// false</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Object</span>); <span class="hljs-comment">// true</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Function</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Function</span>); <span class="hljs-comment">// true</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Function</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Object</span>); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+              <h1><span id="165比较版本号">（165）比较版本号</span></h1><h2><span id="题目描述">题目描述</span></h2><p>给你两个版本号 version1 和 version2 ，请你比较它们。</p>
+<p>版本号由一个或多个修订号组成，各修订号由一个 ‘.’ 连接。每个修订号由 多位数字 组成，可能包含 前导零 。每个版本号至少包含一个字符。修订号从左到右编号，下标从 0 开始，最左边的修订号下标为 0 ，下一个修订号下标为 1 ，以此类推。例如，2.5.33 和 0.1 都是有效的版本号。</p>
+<p>比较版本号时，请按从左到右的顺序依次比较它们的修订号。比较修订号时，只需比较 忽略任何前导零后的整数值 。也就是说，修订号 1 和修订号 001 相等 。如果版本号没有指定某个下标处的修订号，则该修订号视为 0 。例如，版本 1.0 小于版本 1.1 ，因为它们下标为 0 的修订号相同，而下标为 1 的修订号分别为 0 和 1 ，0 &lt; 1 。</p>
+<p>返回规则如下：</p>
+<p>如果 version1 &gt; version2 返回 1，<br>如果 version1 &lt; version2 返回 -1，<br>除此之外返回 0。</p>
+<h2><span id="解题">解题</span></h2><h3><span id="思路">思路</span></h3><p>通过点 把字符串分割成数组，然后利用 JS 是动态语言直接相减比较大小。js 中 001 - 01 = 0</p>
+<h3><span id="方法一利用js-动态性">方法一：利用JS 动态性</span></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs JS"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compareVersion</span>(<span class="hljs-params">version1, version2</span>) </span>&#123;<br>      <span class="hljs-keyword">let</span> v1 = version1.split(<span class="hljs-string">&#x27;.&#x27;</span>)<br>      <span class="hljs-keyword">let</span> v2 = version2.split(<span class="hljs-string">&#x27;.&#x27;</span>)<br>      <span class="hljs-keyword">var</span> lMax = <span class="hljs-built_in">Math</span>.max(v1.length, v2.length)<br>      <span class="hljs-keyword">let</span> p = <span class="hljs-number">0</span><br>      <span class="hljs-keyword">while</span> (p &lt; lMax) &#123;<br>        v1[p] = p &gt;= v1.length ? <span class="hljs-number">0</span> : v1[p]<br>        v2[p] = p &gt;= v2.length ? <span class="hljs-number">0</span> : v2[p]<br>        <span class="hljs-keyword">if</span> (v1[p] - v2[p] &gt; <span class="hljs-number">0</span>) &#123;<br>          <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (v1[p] - v2[p] &lt; <span class="hljs-number">0</span>) &#123;<br>          <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span><br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>          <span class="hljs-keyword">if</span> (p == lMax - <span class="hljs-number">1</span> &amp;&amp; v1[p] - v2[p] == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>        &#125;<br>        p++<br>      &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
 
-<h1><span id="原理">原理</span></h1><p><code>instanceof</code> 运算符用于测试构造函数的 <code>prototype</code> 属性是否出现在对象原型链中的任何位置</p>
-<p>B(Person) 的 <code>prototype</code> 所指向的原型对象确实在 A(p1) 的原型链上，所以我们可以确定 <code>p1 instanceof Person</code> 一定是为 <code>true</code> 的</p>
-<p>换句话说，如果<code>A instanceof B</code>，那么 <code>A</code> 必须是一个对象，而 <code>B</code> 必须是一个合法的 JavaScript 函数。在这两个条件都满足的情况下：</p>
-<p>判断 B 的 prototype 属性指向的原型对象(B.prototype)是否在对象 A 的原型链上。</p>
-<p>如果在，则为 true；如果不在，则为 false。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span>(<span class="hljs-params"></span>) </span>&#123;&#125; <span class="hljs-keyword">const</span> p1 = <span class="hljs-keyword">new</span> Person();p1 <span class="hljs-keyword">instanceof</span> Person; <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
 
-<p>总结：</p>
-<ul>
-<li>所有 JavaScript 对象都有 <code>__proto__</code> 属性，只有 <code>Object.prototype.__proto__ === null</code> ；</li>
-<li>构造函数的 <code>prototype</code> 属性指向它的原型对象，而构造函数实例的 <code>__proto__</code> 属性也指向该原型对象；</li>
-</ul>
-<p><img src="/img/16a1ec1ba426bde0" srcset="/img/loading.gif" lazyload alt="img"></p>
-<h1><span id="实现instanceof函数">实现instanceof函数</span></h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">instance</span>(<span class="hljs-params">L, R</span>) </span>&#123;<br>      <span class="hljs-keyword">let</span> O = R.prototype<br>      L = L.__proto__<br>      <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>        <span class="hljs-keyword">if</span> (L === <span class="hljs-literal">null</span>) &#123;<br>          <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>        &#125;<br>        <span class="hljs-keyword">if</span> (O === L) &#123;<br>          <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>        &#125;<br>        L = L.__proto__<br>      &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
 
 
             </div>
@@ -266,17 +257,10 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/JavaScript/">JavaScript</a>
+                      <a class="hover-with-bg" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
                     
                   </div>
                 
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/instanceof/">instanceof</a>
-                    
-                  </div>
                 
               </div>
               
@@ -291,9 +275,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/05/%E6%8E%92%E5%BA%8F%E6%96%B9%E5%BC%8F%E6%95%B4%E7%90%86/">
+                      <a href="/2021/07/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0-%E9%9B%86%E5%90%88/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">排序方式整理</span>
+                        <span class="hidden-mobile">数据结构学习-集合</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -301,8 +285,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/02/dom%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/">
-                        <span class="hidden-mobile">dom 的常见操作</span>
+                      <a href="/2021/07/06/%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2/">
+                        <span class="hidden-mobile">无重复字符的最长子串</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

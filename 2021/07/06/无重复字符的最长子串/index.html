@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>instanceof作用及原理 - DevinQing</title>
+  <title>无重复字符的最长子串 - DevinQing</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,9 +163,9 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="instanceof作用及原理">
+            <span class="h2" id="subtitle" title="无重复字符的最长子串">
               
-                instanceof作用及原理
+                无重复字符的最长子串
               
             </span>
 
@@ -175,8 +175,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-02 22:13" pubdate>
-        2021年7月2日 晚上
+      <time datetime="2021-07-06 07:45" pubdate>
+        2021年7月6日 早上
       </time>
     </span>
   
@@ -187,7 +187,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      357 字
+      353 字
     </span>
   
 
@@ -235,28 +235,18 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">instanceof作用及原理</h1>
+            <h1 style="display: none">无重复字符的最长子串</h1>
             
             <div class="markdown-body">
-              <h1><span id="使用场景">使用场景</span></h1><p>instanceof 返回一个布尔值，主要用于判断某对象是不是某个类的实例对象</p>
-<p>比如 判断 new Date() 是不是 Date 类的实例对象</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> a = <span class="hljs-string">&quot;abc&quot;</span>;<br>    <span class="hljs-built_in">console</span>.log(a <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">String</span>); <span class="hljs-comment">// false</span><br><br>    <span class="hljs-keyword">const</span> b = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;abc&quot;</span>);<br>    <span class="hljs-built_in">console</span>.log(b <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">String</span>); <span class="hljs-comment">// true</span><br><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">String</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">String</span>); <span class="hljs-comment">// false</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Object</span>); <span class="hljs-comment">// true</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Function</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Function</span>); <span class="hljs-comment">// true</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Function</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Object</span>); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+              <h1><span id="3无重复字符的最长子串">（3）无重复字符的最长子串</span></h1><h2><span id="题目描述">题目描述</span></h2><p>给定一个字符串，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
+<h2><span id="解题">解题</span></h2><h3><span id="方法一双指针通过哈希表判断是否有重复">方法一：双指针，通过哈希表判断是否有重复</span></h3><p>在上面的流程中，我们还需要使用一种数据结构来判断 是否有重复的字符，常用的数据结构为哈希集合（即 C++ 中的 std::unordered_set，Java 中的 HashSet，Python 中的 set, JavaScript 中的 Set）。在左指针向右移动的时候，我们从哈希集合中移除一个字符，在右指针向右移动的时候，我们往哈希集合中添加一个字符。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> s = <span class="hljs-string">&#x27;abcad&#x27;</span><br>     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">lengthOfLongestSubstring</span>(<span class="hljs-params">str</span>) </span>&#123;<br>       <span class="hljs-keyword">let</span> l = <span class="hljs-number">0</span><br>       <span class="hljs-keyword">let</span> set = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>()<br>       <span class="hljs-keyword">let</span> ans = <span class="hljs-number">0</span><br>       <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; str.length; i++) &#123;<br>         <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">0</span>) &#123;<br>           set.delete(str.charAt(i - <span class="hljs-number">1</span>))<br>         &#125;<br>         <span class="hljs-keyword">while</span> (l &lt; str.length &amp;&amp; !set.has(str.charAt(l))) &#123;<br>           set.add(str.charAt(l))<br>           l++<br>         &#125;<br>         ans = <span class="hljs-built_in">Math</span>.max(ans, l - i)<br>       &#125;<br>       <span class="hljs-keyword">return</span> ans<br>     &#125;<br></code></pre></td></tr></table></figure>
 
-<h1><span id="原理">原理</span></h1><p><code>instanceof</code> 运算符用于测试构造函数的 <code>prototype</code> 属性是否出现在对象原型链中的任何位置</p>
-<p>B(Person) 的 <code>prototype</code> 所指向的原型对象确实在 A(p1) 的原型链上，所以我们可以确定 <code>p1 instanceof Person</code> 一定是为 <code>true</code> 的</p>
-<p>换句话说，如果<code>A instanceof B</code>，那么 <code>A</code> 必须是一个对象，而 <code>B</code> 必须是一个合法的 JavaScript 函数。在这两个条件都满足的情况下：</p>
-<p>判断 B 的 prototype 属性指向的原型对象(B.prototype)是否在对象 A 的原型链上。</p>
-<p>如果在，则为 true；如果不在，则为 false。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span>(<span class="hljs-params"></span>) </span>&#123;&#125; <span class="hljs-keyword">const</span> p1 = <span class="hljs-keyword">new</span> Person();p1 <span class="hljs-keyword">instanceof</span> Person; <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
-
-<p>总结：</p>
-<ul>
-<li>所有 JavaScript 对象都有 <code>__proto__</code> 属性，只有 <code>Object.prototype.__proto__ === null</code> ；</li>
-<li>构造函数的 <code>prototype</code> 属性指向它的原型对象，而构造函数实例的 <code>__proto__</code> 属性也指向该原型对象；</li>
+<h4><span id="复杂度分析">复杂度分析</span></h4><ul>
+<li>时间复杂度：O(N)，其中 N 是字符串的长度。左指针和右指针分别会遍历整个字符串一次。</li>
+<li>空间复杂度：O(∣Σ∣)，其中 \SigmaΣ 表示字符集（即字符串中可以出现的字符），∣Σ∣ 表示字符集的大小。</li>
 </ul>
-<p><img src="/img/16a1ec1ba426bde0" srcset="/img/loading.gif" lazyload alt="img"></p>
-<h1><span id="实现instanceof函数">实现instanceof函数</span></h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">instance</span>(<span class="hljs-params">L, R</span>) </span>&#123;<br>      <span class="hljs-keyword">let</span> O = R.prototype<br>      L = L.__proto__<br>      <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>        <span class="hljs-keyword">if</span> (L === <span class="hljs-literal">null</span>) &#123;<br>          <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>        &#125;<br>        <span class="hljs-keyword">if</span> (O === L) &#123;<br>          <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>        &#125;<br>        L = L.__proto__<br>      &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
-
+<h4><span id="反思">反思</span></h4><p>只要涉及到去重之类的，我们都可以用哈希表来记录数据再进行比较</p>
 
             </div>
             <hr>
@@ -266,17 +256,10 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/JavaScript/">JavaScript</a>
+                      <a class="hover-with-bg" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
                     
                   </div>
                 
-                
-                  <div class="post-meta">
-                    <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/instanceof/">instanceof</a>
-                    
-                  </div>
                 
               </div>
               
@@ -291,9 +274,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/05/%E6%8E%92%E5%BA%8F%E6%96%B9%E5%BC%8F%E6%95%B4%E7%90%86/">
+                      <a href="/2021/07/06/%E6%AF%94%E8%BE%83%E7%89%88%E6%9C%AC%E5%8F%B7/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">排序方式整理</span>
+                        <span class="hidden-mobile">比较版本号</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -301,8 +284,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/02/dom%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/">
-                        <span class="hidden-mobile">dom 的常见操作</span>
+                      <a href="/2021/07/05/%E6%8E%92%E5%BA%8F%E6%96%B9%E5%BC%8F%E6%95%B4%E7%90%86/">
+                        <span class="hidden-mobile">排序方式整理</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

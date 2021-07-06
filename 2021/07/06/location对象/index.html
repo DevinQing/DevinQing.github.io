@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>instanceof作用及原理 - DevinQing</title>
+  <title>location对象 - DevinQing</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,9 +163,9 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="instanceof作用及原理">
+            <span class="h2" id="subtitle" title="location对象">
               
-                instanceof作用及原理
+                location对象
               
             </span>
 
@@ -175,8 +175,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-02 22:13" pubdate>
-        2021年7月2日 晚上
+      <time datetime="2021-07-06 10:00" pubdate>
+        2021年7月6日 上午
       </time>
     </span>
   
@@ -187,7 +187,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      357 字
+      1.1k 字
     </span>
   
 
@@ -197,7 +197,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4
+      12
        分钟
     </span>
   
@@ -235,28 +235,103 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">instanceof作用及原理</h1>
+            <h1 style="display: none">location对象</h1>
             
             <div class="markdown-body">
-              <h1><span id="使用场景">使用场景</span></h1><p>instanceof 返回一个布尔值，主要用于判断某对象是不是某个类的实例对象</p>
-<p>比如 判断 new Date() 是不是 Date 类的实例对象</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> a = <span class="hljs-string">&quot;abc&quot;</span>;<br>    <span class="hljs-built_in">console</span>.log(a <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">String</span>); <span class="hljs-comment">// false</span><br><br>    <span class="hljs-keyword">const</span> b = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;abc&quot;</span>);<br>    <span class="hljs-built_in">console</span>.log(b <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">String</span>); <span class="hljs-comment">// true</span><br><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">String</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">String</span>); <span class="hljs-comment">// false</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Object</span>); <span class="hljs-comment">// true</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Function</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Function</span>); <span class="hljs-comment">// true</span><br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Function</span> <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Object</span>); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+              <h1><span id="location对象">location对象</span></h1><p>Location对象包含有关当前URL的信息.它是一个比较特别的对象,因为它既是Window对象的一部分,可通过<code>window.location</code>属性来访问.也是document对象的属性,通过<code>document.location</code>来使用.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">window</span>.location === <span class="hljs-built_in">document</span>.location) <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
 
-<h1><span id="原理">原理</span></h1><p><code>instanceof</code> 运算符用于测试构造函数的 <code>prototype</code> 属性是否出现在对象原型链中的任何位置</p>
-<p>B(Person) 的 <code>prototype</code> 所指向的原型对象确实在 A(p1) 的原型链上，所以我们可以确定 <code>p1 instanceof Person</code> 一定是为 <code>true</code> 的</p>
-<p>换句话说，如果<code>A instanceof B</code>，那么 <code>A</code> 必须是一个对象，而 <code>B</code> 必须是一个合法的 JavaScript 函数。在这两个条件都满足的情况下：</p>
-<p>判断 B 的 prototype 属性指向的原型对象(B.prototype)是否在对象 A 的原型链上。</p>
-<p>如果在，则为 true；如果不在，则为 false。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Person</span>(<span class="hljs-params"></span>) </span>&#123;&#125; <span class="hljs-keyword">const</span> p1 = <span class="hljs-keyword">new</span> Person();p1 <span class="hljs-keyword">instanceof</span> Person; <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+<p>在<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/Location">MDN</a>中提到,<code>Location</code> 其实是一个接口,表示链接到的对象的URL.<code>Document</code> 和 <code>Window</code> 接口都有这样一个链接的Location.所以我们可以通过<code>document.location</code> 或 <code>window.location</code> 来访问 <code>Location</code> 对象.甚至于<code>location</code> 都是一个全局变量.我们直接在控制台键入 <code>location</code> 也会返回一个 <code>Location</code> 对象</p>
+<h2><span id="对象属性">对象属性</span></h2><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>hash</td>
+<td>锚点部分,以<code>#</code>开头</td>
+</tr>
+<tr>
+<td>host</td>
+<td>主机名 + 端口号</td>
+</tr>
+<tr>
+<td>hostname</td>
+<td>主机名 如<code>127.0.0.1</code> <code>localhost</code> 等</td>
+</tr>
+<tr>
+<td>href</td>
+<td>包含完整URL</td>
+</tr>
+<tr>
+<td>origin</td>
+<td>协议 + 主机名 + 端口号(我们常说的跨域,跨的就是它)</td>
+</tr>
+<tr>
+<td>pathname</td>
+<td>路径部分,以 <code>/</code> 开头</td>
+</tr>
+<tr>
+<td>port</td>
+<td>端口,常见的<code>80</code> <code>443</code>等</td>
+</tr>
+<tr>
+<td>protocol</td>
+<td>URL对应的协议,注意最后是有一个<code>:</code>的,如<code>http:</code> <code>https:</code> 等</td>
+</tr>
+<tr>
+<td>search</td>
+<td>参数部分,以<code>?</code> 开头</td>
+</tr>
+</tbody></table>
+<p>其中上面的属性,<strong>除了</strong> <code>origin</code> 是个只读属性不可修改外,其余的属性都是读写兼备的. 下面是属性如何获取和设置的用法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">window</span>.location.hash)  <span class="hljs-comment">// 读取当前页面的hash 结果为 #test</span><br><span class="hljs-built_in">window</span>.location.hash = <span class="hljs-string">&#x27;test2&#x27;</span> <span class="hljs-comment">// 设置当前页面的hash 此时可以观察到浏览器的url会变化</span><br><span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">window</span>.location.hash) <span class="hljs-comment">// 再次读取hash,结果变成了 #test2</span><br><span class="hljs-built_in">window</span>.location.href = <span class="hljs-string">&#x27;https://www.baidu.com&#x27;</span>  <span class="hljs-comment">// 页面直接跳转到百度</span><br></code></pre></td></tr></table></figure>
 
-<p>总结：</p>
+<p>在这里顺便提一下,现在大部分的浏览器都支持 <code>hashchange</code> 事件.就是当浏览器<code>#</code> 后面的内容变化时,触发此事件</p>
+<p><strong>注意点：</strong></p>
 <ul>
-<li>所有 JavaScript 对象都有 <code>__proto__</code> 属性，只有 <code>Object.prototype.__proto__ === null</code> ；</li>
-<li>构造函数的 <code>prototype</code> 属性指向它的原型对象，而构造函数实例的 <code>__proto__</code> 属性也指向该原型对象；</li>
+<li>每次修改<code>location</code> 的属性(<code>hash</code>除外),页面都会以新URL重新加载.</li>
+<li>location.origin<code> 这个属性在IE10及其以下是不存在的,会返回</code>undefined</li>
 </ul>
-<p><img src="/img/16a1ec1ba426bde0" srcset="/img/loading.gif" lazyload alt="img"></p>
-<h1><span id="实现instanceof函数">实现instanceof函数</span></h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">instance</span>(<span class="hljs-params">L, R</span>) </span>&#123;<br>      <span class="hljs-keyword">let</span> O = R.prototype<br>      L = L.__proto__<br>      <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>        <span class="hljs-keyword">if</span> (L === <span class="hljs-literal">null</span>) &#123;<br>          <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span><br>        &#125;<br>        <span class="hljs-keyword">if</span> (O === L) &#123;<br>          <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>        &#125;<br>        L = L.__proto__<br>      &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+<h2><span id="对象方法">对象方法</span></h2><p> <code>Location</code> 对象有3个方法 (<code>toString</code>方法就不说了,就是返回一个包含完整url的字符串)</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>assign</td>
+<td>加载新页面</td>
+</tr>
+<tr>
+<td>reload</td>
+<td>重加载当前页面</td>
+</tr>
+<tr>
+<td>replace</td>
+<td>用一个新页面代替当前页面</td>
+</tr>
+</tbody></table>
+<h3><span id="reload方法"><code>reload</code>方法</span></h3><p>参数是一个可选的布尔类型,不填默认为<code>false</code>,表示可能从缓存中读取当前页面刷新,相当于普通的F5刷新,<code>true</code>表示强制浏览器从服务器去重新获取页面资源,相当于强制刷新(<code>Shift</code>+<code>F5</code> 或者 <code>Cmd</code>+<code>Shift</code>+<code>R</code>)</p>
+<h3><span id="assign方法"><code>assign</code>方法</span></h3><p>使用了 <code>assign</code> 后,会在浏览器的历史记录中留下之前老页面的地址,当我们在新页面点击回退键的时候还可以回到之前的页面</p>
+<h3><span id="replace方法"><code>replace</code>方法</span></h3><p><code>eplace</code> 则是使用新页面的地址替换老页面的地址,此时再点击回退按钮就回不到我们之前的页面去了.</p>
+<h2><span id="补充">补充</span></h2><h3><span id="meta实现刷新和跳转">meta实现刷新和跳转</span></h3><p>其实当我们想要实现页面的跳转或者每隔一段时间刷新当前页面,不一定非得使用定时器+location方法.我们还可以使用meta属性来达到相同的效果.假如我这是一个监控页面,想要每隔20秒刷新一次页面.使用定时器的方法代码如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-built_in">window</span>.location.reload()<br>&#125;,<span class="hljs-number">20000</span>)<br></code></pre></td></tr></table></figure>
 
+<p>而使用meta标签则只需要</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;refresh&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;20&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>又假如这是一个简单的介绍页,在10s后差不多就要自动跳到其他页面.我们也可以使用上面的meta属性.只需要在<code>content</code>里面时间的后面加上跳转的地址就可以了,等时间到了它就会自动跳转.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;refresh&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;10;https://www.baidu.com&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>当然使用meta有一个不好的地方就是它的刷新和跳转是不可中途取消的.因此它的使用场景要视具体的业务而定.比如一个需要权限的页面被非法访问,那么就可以控制一定时间后自动跳到其他页面去.</p>
+<h3><span id="urlsearchparams接口查询字符串">URLSearchParams接口查询字符串</span></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> urlParams = <span class="hljs-keyword">new</span> URLSearchParams(<span class="hljs-built_in">window</span>.location.search)<br><span class="hljs-built_in">console</span>.log(urlParams.get(<span class="hljs-string">&#x27;id&#x27;</span>))  <span class="hljs-comment">// 123</span><br></code></pre></td></tr></table></figure>
+
+<p><code>URLSearchParams</code> 接口定义了一些实用的方法来处理URL中的查询字符串.</p>
 
             </div>
             <hr>
@@ -274,7 +349,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/instanceof/">instanceof</a>
+                      <a class="hover-with-bg" href="/tags/BOM/">BOM</a>
                     
                   </div>
                 
@@ -291,9 +366,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/05/%E6%8E%92%E5%BA%8F%E6%96%B9%E5%BC%8F%E6%95%B4%E7%90%86/">
+                      <a href="/2021/07/06/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%9C%BA%E5%88%B6%E5%8F%8A%E5%8E%9F%E5%9B%A0/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">排序方式整理</span>
+                        <span class="hidden-mobile">三次握手四次挥手机制及原因</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -301,8 +376,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/02/dom%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/">
-                        <span class="hidden-mobile">dom 的常见操作</span>
+                      <a href="/2021/07/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0-%E9%9B%86%E5%90%88/">
+                        <span class="hidden-mobile">数据结构学习-集合</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
